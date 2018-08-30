@@ -5,9 +5,13 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{33B37739-60F8-4874-95EE-B5A3627C7FB6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Design", "Design", "{83557619-3434-46F1-ACD8-9746E5E9C50D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkWeb", "ArkWeb\ArkWeb.csproj", "{2D991ED0-8B8D-4259-888F-3B552C267C8B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Design", "Design", "{1595DCBE-87FD-4208-B1F8-36EA0D510340}"
+	ProjectSection(SolutionItems) = preProject
+		Design\ArkSchema.mdj = Design\ArkSchema.mdj
+		Design\ArkSchema.pdf = Design\ArkSchema.pdf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
