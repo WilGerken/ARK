@@ -1,0 +1,59 @@
+﻿@model ArkWeb.Models.ArkStory_EditItem_ViewModel
+@{
+    ViewData["Title"] = "Story Info";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>@ViewData["Message"]</h3>
+    </div>
+</div>
+@Html.HiddenFor(x => x.ModelObject.ObjectID)
+@Html.HiddenFor(x => x.ModelObject.VersionKey)
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(x => x.ModelObject.TitleTxt, "Story Title:")
+        @Html.DisplayFor(x => x.ModelObject.TitleTxt, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(x => x.ModelObject.LocationTxt, "Location:")
+        @Html.DisplayFor(x => x.ModelObject.LocationTxt, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(x => x.ModelObject.NarrativeTxt, "Narrative:")
+        @Html.DisplayFor(x => x.ModelObject.NarrativeTxt, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-3">
+        @Html.LabelFor(x => x.ModelObject.CreateByUid, "Created By:")
+        @Html.DisplayFor(x => x.ModelObject.CreateByUid, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(x => x.ModelObject.CreateOnDts, "Created On:")
+        @Html.DisplayFor(x => x.ModelObject.CreateOnDts, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-3">
+        @Html.LabelFor(x => x.ModelObject.UpdateByUid, "Updated By:")
+        @Html.DisplayFor(x => x.ModelObject.UpdateByUid, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(x => x.ModelObject.UpdateOnDts, "Updated On:")
+        @Html.DisplayFor(x => x.ModelObject.UpdateOnDts, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(x => x.ModelObject.ActiveYn, "Is Active:")
+        @Html.DisplayFor(x => x.ModelObject.ActiveYn, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        @Html.ActionLink("Edit", "ArkStory_Edit", "Story", new { id = Model.ModelObject.ObjectID })
+    </div>
+</div>

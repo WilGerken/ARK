@@ -30,11 +30,34 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stories <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Story" asp-action="ArkStory_List">Stories</a></li>
+                            <li><a asp-area="" asp-controller="Story" asp-action="ArkBlog_List">Blogs</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Project" asp-action="ArkProject_List">Projects</a></li>
+                            <li><a asp-area="" asp-controller="Project" asp-action="ProjectLocation_List">Locations</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">People <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Entity" asp-action="ArkEntity_List">People</a></li>
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">References</a></li>
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityContact_List">Contacts</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
-                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
