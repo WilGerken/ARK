@@ -13,59 +13,71 @@ namespace Library.Resources.Story.memory
     {
         // resource list
 
-        public static List<D_ARK_BLOG> _ResourceList = new List<D_ARK_BLOG>();
+        public static List<D_ARK_BLOG> ResourceList = new List<D_ARK_BLOG>();
 
         static ARK_BLOG ()
         {
             int lID = 1;
 
-            _ResourceList.Add (new D_ARK_BLOG
+            ResourceList.Add (new D_ARK_BLOG
             {
                 objectID     = lID++,
                 entityID     = 1,
                 entryDts     = DateTime.Now.AddDays(-7),
                 titleTxt     = "My Trip - Day One",
-                narrativeTxt = "First day, Great Start."
+                narrativeTxt = "First day, Great Start.",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_BLOG
+            ResourceList.Add(new D_ARK_BLOG
             {
                 objectID     = lID++,
                 entityID     = 1,
                 entryDts     = DateTime.Now.AddDays(-6),
                 titleTxt     = "My Trip - Day Two",
-                narrativeTxt = "Second day, sunshine."
+                narrativeTxt = "Second day, sunshine.",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_BLOG
+            ResourceList.Add(new D_ARK_BLOG
             {
                 objectID     = lID++,
                 entityID     = 1,
                 entryDts     = DateTime.Now.AddDays(-5),
                 titleTxt     = "My Trip - Day Three",
-                narrativeTxt = "Third day, rainy."
+                narrativeTxt = "Third day, rainy.",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_BLOG
+            ResourceList.Add(new D_ARK_BLOG
             {
                 objectID     = lID++,
                 entityID     = 1,
                 entryDts     = DateTime.Now.AddDays(-5),
                 titleTxt     = "My Trip - Day Four",
-                narrativeTxt = "Last day, heading home."
+                narrativeTxt = "Last day, heading home.",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_BLOG
+            ResourceList.Add(new D_ARK_BLOG
             {
                 objectID = lID++,
                 entityID = 2,
                 entryDts = DateTime.Now.AddDays(-1),
                 titleTxt = "Thoughts on Yesterday",
-                narrativeTxt = "Was great."
+                narrativeTxt = "Was great.",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_BLOG
+            ResourceList.Add(new D_ARK_BLOG
             {
                 objectID = lID++,
                 entityID = 2,
                 entryDts = DateTime.Now.AddDays(1),
                 titleTxt = "Thoughts on Tomorrow",
-                narrativeTxt = "Should be good."
+                narrativeTxt = "Should be good.",
+                createByUid = 1,
+                updateByUid = 1
             });
         }
 
@@ -76,7 +88,7 @@ namespace Library.Resources.Story.memory
         /// <returns></returns>
         public List<D_ARK_BLOG> SelectList (F_ARK_BLOG aFilter)
         {
-            var lResult = (from item in _ResourceList select item);
+            var lResult = (from item in ResourceList select item);
 
             // apply filter attributes
             if (aFilter.entityID.HasValue)
@@ -131,7 +143,7 @@ namespace Library.Resources.Story.memory
 
             // apply key attributes
             if (aKey.objectID.HasValue)
-                lResult = _ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+                lResult = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // throw exception if not found
             if (lResult == null)
@@ -149,8 +161,8 @@ namespace Library.Resources.Story.memory
         {
             int lID = 0;
 
-            if (_ResourceList.Count > 0)
-                lID = _ResourceList.Select (x => x.objectID).Max() + 1;
+            if (ResourceList.Count > 0)
+                lID = ResourceList.Select (x => x.objectID).Max() + 1;
 
             // create new item
             D_ARK_BLOG lItem = new D_ARK_BLOG
@@ -170,9 +182,9 @@ namespace Library.Resources.Story.memory
             };
 
             // insert new item into list
-            lock (_ResourceList)
+            lock (ResourceList)
             {
-                _ResourceList.Add (lItem);
+                ResourceList.Add (lItem);
             }
 
             return aDto;
@@ -185,7 +197,7 @@ namespace Library.Resources.Story.memory
         public D_ARK_BLOG UpdateItem (D_ARK_BLOG aDto)
         {
             // fetch indicated item
-            D_ARK_BLOG lItem = _ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
+            D_ARK_BLOG lItem = ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
 
             // compare versions
             if (aDto.versionKey != null && lItem.versionKey != null && ! aDto.versionKey.SequenceEqual (lItem.versionKey))
@@ -218,12 +230,12 @@ namespace Library.Resources.Story.memory
         public void DeleteItem (K_ARK_BLOG aKey)
         {
             // fetch indicated item
-            D_ARK_BLOG lItem = _ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+            D_ARK_BLOG lItem = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // remove from list
-            lock (_ResourceList)
+            lock (ResourceList)
             {
-                _ResourceList.Remove (lItem);
+                ResourceList.Remove (lItem);
             }
         }
     }

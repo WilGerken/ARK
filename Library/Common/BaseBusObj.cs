@@ -125,6 +125,16 @@ namespace Library.Common
         }
 
         /// <summary>
+        /// text for select list
+        /// </summary>
+        public static readonly PropertyInfo<string> SelectTxt_Property = RegisterProperty<string>(c => c.SelectTxt);
+        public string SelectTxt
+        {
+            get { return GetProperty(SelectTxt_Property); }
+            set { LoadProperty(SelectTxt_Property, value); }
+        }
+
+        /// <summary>
         /// persistent object active state
         /// </summary>
         public static readonly PropertyInfo<bool> ActiveYn_Property = RegisterProperty<bool>(c => c.ActiveYn);
@@ -137,8 +147,9 @@ namespace Library.Common
 
         protected void FromDto (Data_O_Base dto)
         {
-            ObjectID = dto.objectID;
-            ActiveYn = dto.activeYn;
+            ObjectID  = dto.objectID;
+            ActiveYn  = dto.activeYn;
+            SelectTxt = dto.selectTxt;
         }
 
         #endregion
@@ -243,6 +254,13 @@ namespace Library.Common
             set { SetProperty(CreateByUid_Property, value); }
         }
 
+        public static readonly PropertyInfo<string> CreateByNm_Property = RegisterProperty<string>(c => c.CreateByNm);
+        public string CreateByNm
+        {
+            get { return GetProperty(CreateByNm_Property); }
+            set { SetProperty(CreateByNm_Property, value); }
+        }
+
         public static readonly PropertyInfo<DateTime> CreateOnDts_Property = RegisterProperty<DateTime>(c => c.CreateOnDts);
         [Required]
         public DateTime CreateOnDts
@@ -257,6 +275,13 @@ namespace Library.Common
         {
             get { return GetProperty(UpdateByUid_Property); }
             set { SetProperty(UpdateByUid_Property, value); }
+        }
+
+        public static readonly PropertyInfo<string> UpdateByNm_Property = RegisterProperty<string>(c => c.UpdateByNm);
+        public string UpdateByNm
+        {
+            get { return GetProperty(UpdateByNm_Property); }
+            set { SetProperty(UpdateByNm_Property, value); }
         }
 
         public static readonly PropertyInfo<DateTime> UpdateOnDts_Property = RegisterProperty<DateTime>(c => c.UpdateOnDts);
@@ -283,6 +308,9 @@ namespace Library.Common
             UpdateByUid = dto.updateByUid;
             UpdateOnDts = dto.updateOnDts;
             VersionKey  = dto.versionKey;
+
+            CreateByNm = dto.createByNm;
+            UpdateByNm = dto.updateByNm;
         }
 
         protected void ToDto (Data_O_Base dto)

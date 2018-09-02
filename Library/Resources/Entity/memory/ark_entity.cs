@@ -12,65 +12,83 @@ namespace Library.Resources.Entity.memory
     public class ARK_ENTITY : DATA_ACCESS_BASE<D_ARK_ENTITY, F_ARK_ENTITY, K_ARK_ENTITY>, I_ARK_ENTITY
     {
         // resource list
-        public static List<D_ARK_ENTITY> _ResourceList = new List<D_ARK_ENTITY>();
+        public static List<D_ARK_ENTITY> ResourceList = new List<D_ARK_ENTITY>();
 
         static ARK_ENTITY ()
         {
             int lID = Ref.AdminID;
 
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Admin",
-                descTxt = "Application Administrative Account"
+                descTxt = "Application Administrative Account",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Guest",
-                descTxt = "Application Guest Account"
+                descTxt = "Application Guest Account",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add (new D_ARK_ENTITY
+            ResourceList.Add (new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Fred Head",
-                descTxt = "Fred of the clan Head"
+                descTxt = "Fred of the clan Head",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Jed Head",
-                descTxt = "Jed of the clan Head"
+                descTxt = "Jed of the clan Head",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Ned Head",
-                descTxt = "Ned of the clan Head"
+                descTxt = "Ned of the clan Head",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Ted Head",
-                descTxt = "Ted of the clan Head"
+                descTxt = "Ted of the clan Head",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Edith Head",
-                descTxt = "Matriarch of the clan Head"
+                descTxt = "Matriarch of the clan Head",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Naomi Head",
-                descTxt = "Naomi of the clan Head"
+                descTxt = "Naomi of the clan Head",
+                createByUid = 1,
+                updateByUid = 1
             });
-            _ResourceList.Add(new D_ARK_ENTITY
+            ResourceList.Add(new D_ARK_ENTITY
             {
                 objectID = lID++,
                 entityNm = "Nicole Head",
-                descTxt = "Nicole of the clan Head"
+                descTxt = "Nicole of the clan Head",
+                createByUid = 1,
+                updateByUid = 1
             });
         }
 
@@ -81,7 +99,7 @@ namespace Library.Resources.Entity.memory
         /// <returns></returns>
         public List<D_ARK_ENTITY> SelectList (F_ARK_ENTITY aFilter)
         {
-            IEnumerable<D_ARK_ENTITY> lResult = _ResourceList;
+            IEnumerable<D_ARK_ENTITY> lResult = ResourceList;
 
             // apply filter attributes
             if (! string.IsNullOrEmpty (aFilter.entityNm))
@@ -116,7 +134,7 @@ namespace Library.Resources.Entity.memory
 
             // apply key attributes
             if (aKey.objectID.HasValue)
-                lResult = _ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+                lResult = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // throw exception if not found
             if (lResult == null)
@@ -134,8 +152,8 @@ namespace Library.Resources.Entity.memory
         {
             int lID = 0;
 
-            if (_ResourceList.Count > 0)
-                lID = _ResourceList.Select (x => x.objectID).Max() + 1;
+            if (ResourceList.Count > 0)
+                lID = ResourceList.Select (x => x.objectID).Max() + 1;
 
             // create new item
             D_ARK_ENTITY lItem = new D_ARK_ENTITY
@@ -146,7 +164,7 @@ namespace Library.Resources.Entity.memory
             };
 
             // insert new item into list
-            lock (_ResourceList)
+            lock (ResourceList)
             {
             }
 
@@ -160,7 +178,7 @@ namespace Library.Resources.Entity.memory
         public D_ARK_ENTITY UpdateItem (D_ARK_ENTITY aDto)
         {
             // fetch indicated item
-            D_ARK_ENTITY lItem = _ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
+            D_ARK_ENTITY lItem = ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
 
             // update item
             lock (lItem)
@@ -178,7 +196,7 @@ namespace Library.Resources.Entity.memory
         /// <param name="aKey"></param>
         public void DeleteItem (K_ARK_ENTITY aKey)
         {
-            lock (_ResourceList)
+            lock (ResourceList)
             {
 
             }

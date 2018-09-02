@@ -13,34 +13,40 @@ namespace Library.Resources.Story.memory
     {
         // resource list
 
-        public static List<D_ARK_STORY> _ResourceList = new List<D_ARK_STORY>();
+        public static List<D_ARK_STORY> ResourceList = new List<D_ARK_STORY>();
 
         static ARK_STORY ()
         {
             int lID = 1;
 
-            _ResourceList.Add (new D_ARK_STORY
+            ResourceList.Add (new D_ARK_STORY
             {
                 objectID     = lID++,
                 titleTxt     = "Community Well",
                 locationTxt  = "Our Community",
-                narrativeTxt = "We seem to need a new well.  Our old one has too many coins in it."
+                narrativeTxt = "We seem to need a new well.  Our old one has too many coins in it.",
+                createByUid = 1,
+                updateByUid = 1
             });
 
-            _ResourceList.Add (new D_ARK_STORY
+            ResourceList.Add (new D_ARK_STORY
             {
                 objectID     = lID++,
                 titleTxt     = "Community School",
                 locationTxt  = "Our Community",
-                narrativeTxt = "We seem to need a new school.  Our old one has too many children in it."
+                narrativeTxt = "We seem to need a new school.  Our old one has too many children in it.",
+                createByUid = 1,
+                updateByUid = 1
             });
 
-            _ResourceList.Add (new D_ARK_STORY
+            ResourceList.Add (new D_ARK_STORY
             {
                 objectID     = lID++,
                 titleTxt     = "Community Aid",
                 locationTxt  = "Our Community",
-                narrativeTxt = "We seem to need some help.  Perhaps if some aid is available?"
+                narrativeTxt = "We seem to need some help.  Perhaps if some aid is available?",
+                createByUid = 1,
+                updateByUid = 1
             });
         }
 
@@ -51,7 +57,7 @@ namespace Library.Resources.Story.memory
         /// <returns></returns>
         public List<D_ARK_STORY> SelectList (F_ARK_STORY aFilter)
         {
-            var lResult = (from item in _ResourceList select item);
+            var lResult = (from item in ResourceList select item);
 
             // apply filter attributes
             if (! string.IsNullOrEmpty (aFilter.titleTxt))
@@ -91,7 +97,7 @@ namespace Library.Resources.Story.memory
 
             // apply key attributes
             if (aKey.objectID.HasValue)
-                lResult = _ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+                lResult = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // throw exception if not found
             if (lResult == null)
@@ -109,8 +115,8 @@ namespace Library.Resources.Story.memory
         {
             int lID = 0;
 
-            if (_ResourceList.Count > 0)
-                lID = _ResourceList.Select (x => x.objectID).Max() + 1;
+            if (ResourceList.Count > 0)
+                lID = ResourceList.Select (x => x.objectID).Max() + 1;
 
             // create new item
             D_ARK_STORY lItem = new D_ARK_STORY
@@ -129,9 +135,9 @@ namespace Library.Resources.Story.memory
             };
 
             // insert new item into list
-            lock (_ResourceList)
+            lock (ResourceList)
             {
-                _ResourceList.Add (lItem);
+                ResourceList.Add (lItem);
             }
 
             return aDto;
@@ -144,7 +150,7 @@ namespace Library.Resources.Story.memory
         public D_ARK_STORY UpdateItem (D_ARK_STORY aDto)
         {
             // fetch indicated item
-            D_ARK_STORY lItem = _ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
+            D_ARK_STORY lItem = ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
 
             // compare versions
             if (aDto.versionKey != null && lItem.versionKey != null && ! aDto.versionKey.SequenceEqual (lItem.versionKey))
@@ -175,12 +181,12 @@ namespace Library.Resources.Story.memory
         public void DeleteItem (K_ARK_STORY aKey)
         {
             // fetch indicated item
-            D_ARK_STORY lItem = _ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+            D_ARK_STORY lItem = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // remove from list
-            lock (_ResourceList)
+            lock (ResourceList)
             {
-                _ResourceList.Remove (lItem);
+                ResourceList.Remove (lItem);
             }
         }
     }

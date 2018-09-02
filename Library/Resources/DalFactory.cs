@@ -10,9 +10,10 @@ namespace Library.Resources
 
     public class DalFactory
     {
-        public const string ARK_COMMON_SCHEMA_NM = "Common";
-        public const string ARK_ENTITY_SCHEMA_NM = "Entity";
-        public const string ARK_STORY_SCHEMA_NM  = "Story";
+        public const string ARK_COMMON_SCHEMA_NM  = "Common";
+        public const string ARK_ENTITY_SCHEMA_NM  = "Entity";
+        public const string ARK_STORY_SCHEMA_NM   = "Story";
+        public const string ARK_PROJECT_SCHEMA_NM = "Project";
 
         private const string MANAGER_TYPE_NAME = "Library.Resources.{0}.DalManager, Library";
 
