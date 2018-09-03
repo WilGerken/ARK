@@ -12,20 +12,27 @@
 <form action="@Url.Action("ArkProject_List", "Project")" method="post">
     <div class="row">
         <div class="form-group col-md-3">
-            @Html.LabelFor(x => x.ListCriteria.ProjectNm, "Project Name")
-            @Html.EditorFor(x => x.ListCriteria.ProjectNm, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(x => x.ListCriteria.ProjectNm, "Project Title:")
+            @Html.TextBoxFor(x => x.ListCriteria.ProjectNm, new { @class = "form-control" })
         </div>
         <div class="form-group col-md-3">
-            @Html.LabelFor(x => x.ListCriteria.DescTxt, "Description")
-            @Html.EditorFor(x => x.ListCriteria.DescTxt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(x => x.ListCriteria.DescTxt, "Description:")
+            @Html.TextBoxFor(x => x.ListCriteria.DescTxt, new { @class = "form-control" })
         </div>
+        <div class="form-group col-md-6">
+            @Html.LabelFor(x => x.ListCriteria.TagTxt, "Tags")
+            @Html.TextBoxFor(x => x.ListCriteria.TagTxt, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.ListCriteria.TagTxt, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
         <div class="form-group col-md-3">
             @Html.LabelFor(x => x.ListCriteria.ManagerID, "Project Manager")
-            @Html.EditorFor(x => x.ListCriteria.ManagerID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextBoxFor(x => x.ListCriteria.ManagerID, new { @class = "form-control" })
         </div>
         <div class="form-group col-md-3">
             @Html.LabelFor(x => x.ListCriteria.ClientID, "Project Client")
-            @Html.EditorFor(x => x.ListCriteria.ClientID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextBoxFor(x => x.ListCriteria.ClientID, new { @class = "form-control" })
         </div>
     </div>
     <div class="row text-center">
@@ -33,13 +40,13 @@
             <input type="submit" value="Refresh List" class="btn btn-default" />
         </div>
         <div class="form-group col-md-4">
-            @Html.LabelFor(x => x.ListCriteria.ActiveYn, "Is Active", new { htmlAttributes = new { @class = "control-label col-md-4" } })
+            @Html.LabelFor(x => x.ListCriteria.ActiveYn, "Is Active", new { @class = "control-label col-md-4", @style = "text-align:left" })
             <div class="col-md-8">
                 @Html.EditorFor(x => x.ListCriteria.ActiveYn, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
         <div class="col-md-4 text-right">
-            <input type="submit" value="Reset Filter" class="btn btn-default" />
+            <input type="submit" value="Reset Filter" class="btn btn-default disabled" />
         </div>
     </div>
 </form>

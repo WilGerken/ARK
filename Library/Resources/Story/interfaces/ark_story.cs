@@ -23,8 +23,12 @@ namespace Library.Resources.Story
     /// </summary>
     public class F_ARK_STORY : Data_F_Base
     {
-        public string titleTxt    { get; set; }
-        public string locationTxt { get; set; }
+        public int?      authorID     { get; set; }
+        public string    titleTxt     { get; set; }
+        public DateTime? fromEntryDt  { get; set; }
+        public DateTime? thruEntryDt  { get; set; }
+        public string    narrativeTxt { get; set; }
+        public string    tagTxt       { get; set; }
 
         /// <summary>
         /// default constructor
@@ -37,6 +41,13 @@ namespace Library.Resources.Story
     /// </summary>
     public class K_ARK_STORY : Data_K_Base
     {
+        public int?   authorID { get; set; }
+        public string titleTxt { get; set; }
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public K_ARK_STORY() { }
     }
 
     /// <summary>
@@ -44,9 +55,11 @@ namespace Library.Resources.Story
     /// </summary>
     public class D_ARK_STORY : Data_O_Base
     {
-        public string titleTxt     { get; set; }
-        public string locationTxt  { get; set; }
-        public string narrativeTxt { get; set; }
+        public int      authorID     { get; set; }
+        public string   authorNm     { get; set; }
+        public string   titleTxt     { get; set; }
+        public DateTime entryDts     { get; set; }
+        public string   narrativeTxt { get; set; }
 
         /// <summary>
         /// default constructo

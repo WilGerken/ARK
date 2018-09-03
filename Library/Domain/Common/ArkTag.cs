@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Library.Common;
 using Library.Resources;
-using Library.Resources.Entity;
+using Library.Resources.Common;
 using Csla;
 
 namespace Library.Domain
@@ -16,13 +16,22 @@ namespace Library.Domain
     /// Item Criteria
     /// </summary>
     [Serializable]
-    public class ArkEntity_ItemCriteria : ItemCriteria_Base<ArkEntity_ItemCriteria>
+    public class ArkTag_ItemCriteria : ItemCriteria_Base<ArkTag_ItemCriteria>
     {
         #region Properties
 
-        public K_ARK_ENTITY ToDto()
+        public static readonly PropertyInfo<string> TagTxt_Property = RegisterProperty<string>(c => c.TagTxt);
+        public string TagTxt
         {
-            K_ARK_ENTITY dto = new K_ARK_ENTITY();
+            get { return ReadProperty(TagTxt_Property); }
+            set { LoadProperty(TagTxt_Property, value); }
+        }
+
+        public K_ARK_TAG ToDto()
+        {
+            K_ARK_TAG dto = new K_ARK_TAG();
+
+            dto.tagTxt = TagTxt;
 
             base.ToDto(dto);
 
@@ -36,23 +45,9 @@ namespace Library.Domain
     /// List Criteria
     /// </summary>
     [Serializable]
-    public class ArkEntity_ListCriteria : ListCriteria_Base<ArkEntity_ListCriteria>
+    public class ArkTag_ListCriteria : ListCriteria_Base<ArkTag_ListCriteria>
     {
         #region Properties
-
-        public static readonly PropertyInfo<string> EntityNm_Property = RegisterProperty<string>(c => c.EntityNm);
-        public string EntityNm
-        {
-            get { return ReadProperty(EntityNm_Property); }
-            set { LoadProperty(EntityNm_Property, value); }
-        }
-
-        public static readonly PropertyInfo<string> DescTxt_Property = RegisterProperty<string>(c => c.DescTxt);
-        public string DescTxt
-        {
-            get { return ReadProperty(DescTxt_Property); }
-            set { LoadProperty(DescTxt_Property, value); }
-        }
 
         public static readonly PropertyInfo<string> TagTxt_Property = RegisterProperty<string>(c => c.TagTxt);
         public string TagTxt
@@ -61,12 +56,10 @@ namespace Library.Domain
             set { LoadProperty(TagTxt_Property, value); }
         }
 
-        public F_ARK_ENTITY ToDto()
+        public F_ARK_TAG ToDto()
         {
-            F_ARK_ENTITY dto = new F_ARK_ENTITY();
+            F_ARK_TAG dto = new F_ARK_TAG();
 
-            dto.entityNm = EntityNm;
-            dto.descTxt  = DescTxt;
             dto.tagTxt   = TagTxt;
 
             base.ToDto (dto);
@@ -81,27 +74,27 @@ namespace Library.Domain
     /// ReadOnly Item
     /// </summary>
     [Serializable]
-    public class ArkEntity_InfoItem : InfoItem_Base<ArkEntity_InfoItem, ArkEntity_ItemCriteria>
+    public class ArkTag_InfoItem : InfoItem_Base<ArkTag_InfoItem, ArkTag_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<string> EntityNm_Property = RegisterProperty<string>(c => c.EntityNm);
-        public string EntityNm
+        public static readonly PropertyInfo<string> TagTxt_Property = RegisterProperty<string>(c => c.TagTxt);
+        public string TagTxt
         {
-            get { return ReadProperty(EntityNm_Property); }
-            private set { LoadProperty(EntityNm_Property, value); }
+            get { return ReadProperty(TagTxt_Property); }
+            private set { LoadProperty(TagTxt_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> DescTxt_Property = RegisterProperty<string>(c => c.DescTxt);
+        public static readonly PropertyInfo<string> DescTxt_Property = RegisterProperty<string>(c => c.TagTxt);
         public string DescTxt
         {
             get { return ReadProperty(DescTxt_Property); }
             private set { LoadProperty(DescTxt_Property, value); }
         }
 
-        public void FromDto (D_ARK_ENTITY dto)
+        public void FromDto (D_ARK_TAG dto)
         {
-            EntityNm = dto.entityNm;
+            TagTxt   = dto.tagTxt;
             DescTxt  = dto.descTxt;
 
             base.FromDto (dto);
@@ -111,7 +104,7 @@ namespace Library.Domain
 
         #region DataPortal
 
-        private void Child_Fetch(D_ARK_ENTITY dto) { FromDto(dto); }
+        private void Child_Fetch(D_ARK_TAG dto) { FromDto(dto); }
 
         #endregion
     }
@@ -120,11 +113,11 @@ namespace Library.Domain
     /// ReadOnly List
     /// </summary>
     [Serializable]
-    public class ArkEntity_InfoList : InfoList_Base<ArkEntity_InfoList, ArkEntity_ListCriteria, ArkEntity_InfoItem, ArkEntity_ItemCriteria>
+    public class ArkTag_InfoList : InfoList_Base<ArkTag_InfoList, ArkTag_ListCriteria, ArkTag_InfoItem, ArkTag_ItemCriteria>
     {
         #region DataPortal
 
-        private void DataPortal_Fetch (ArkEntity_ListCriteria aCriteria)
+        private void DataPortal_Fetch (ArkTag_ListCriteria aCriteria)
         {
             IsReadOnly = false;
             var rlce = RaiseListChangedEvents;
@@ -133,21 +126,21 @@ namespace Library.Domain
             // add select option if given
             if (aCriteria.SelectOption_Value.HasValue)
             {
-                Insert(0, DataPortal.FetchChild<ArkEntity_InfoItem>(new D_ARK_ENTITY
+                Insert(0, DataPortal.FetchChild<ArkTag_InfoItem>(new D_ARK_TAG
                 {
-                    entityNm = aCriteria.SelectOption_Text,
-                    objectID = aCriteria.SelectOption_Value.Value
+                    selectTxt = aCriteria.SelectOption_Text,
+                    objectID  = aCriteria.SelectOption_Value.Value
                 }));
             }
 
             // add elements of list from persistent store
-            using (var ctx = DalFactory.GetManager (DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var ctx = DalFactory.GetManager (DalFactory.ARK_COMMON_SCHEMA_NM))
             {
-                var dal = ctx.GetProvider<I_ARK_ENTITY>();
+                var dal = ctx.GetProvider<I_ARK_TAG>();
                 var list = dal.SelectList(aCriteria.ToDto());
 
                 foreach (var item in list)
-                    Add(DataPortal.FetchChild<ArkEntity_InfoItem>(item));
+                    Add(DataPortal.FetchChild<ArkTag_InfoItem>(item));
             }
 
             RaiseListChangedEvents = rlce;
@@ -158,16 +151,16 @@ namespace Library.Domain
     }
 
     [Serializable]
-    public class ArkEntity_EditItem : EditItem_Base<ArkEntity_EditItem, ArkEntity_ItemCriteria>
+    public class ArkTag_EditItem : EditItem_Base<ArkTag_EditItem, ArkTag_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<string> EntityNm_Property = RegisterProperty<string>(c => c.EntityNm);
+        public static readonly PropertyInfo<string> TagTxt_Property = RegisterProperty<string>(c => c.TagTxt);
         [Required]
-        public string EntityNm
+        public string TagTxt
         {
-            get { return GetProperty(EntityNm_Property); }
-            set { SetProperty(EntityNm_Property, value); }
+            get { return GetProperty(TagTxt_Property); }
+            set { SetProperty(TagTxt_Property, value); }
         }
 
         public static readonly PropertyInfo<string> DescTxt_Property = RegisterProperty<string>(c => c.DescTxt);
@@ -177,23 +170,23 @@ namespace Library.Domain
             set { SetProperty(DescTxt_Property, value); }
         }
 
-        public void FromDto (D_ARK_ENTITY dto)
+        public void FromDto (D_ARK_TAG dto)
         {
             using (BypassPropertyChecks)
             {
-                EntityNm = dto.entityNm;
-                DescTxt  = dto.descTxt;
+                TagTxt  = dto.tagTxt;
+                DescTxt = dto.descTxt;
 
                 base.FromDto (dto);
             }
         }
 
-        public D_ARK_ENTITY ToDto()
+        public D_ARK_TAG ToDto()
         {
-            D_ARK_ENTITY dto = new D_ARK_ENTITY();
+            D_ARK_TAG dto = new D_ARK_TAG();
 
-            dto.entityNm = EntityNm;
-            dto.descTxt  = DescTxt;
+            dto.tagTxt  = TagTxt;
+            dto.descTxt = DescTxt;
 
             base.ToDto (dto);
 
@@ -210,25 +203,25 @@ namespace Library.Domain
             base.DataPortal_Create();
         }
 
-        private void DataPortal_Fetch(ArkEntity_ItemCriteria aKey)
+        private void DataPortal_Fetch(ArkTag_ItemCriteria aKey)
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_COMMON_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ARK_ENTITY>();
+                var dal = dalManager.GetProvider<I_ARK_TAG>();
                 var data = dal.SelectItem(aKey.ToDto());
 
                 FromDto(data);
             }
         }
 
-        private void Child_Fetch(D_ARK_ENTITY dto) { FromDto(dto); }
+        private void Child_Fetch(D_ARK_TAG dto) { FromDto(dto); }
 
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_Insert()
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_COMMON_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ARK_ENTITY>();
+                var dal = dalManager.GetProvider<I_ARK_TAG>();
                 var data = dal.InsertItem(ToDto());
 
                 FromDto(data);
@@ -238,12 +231,12 @@ namespace Library.Domain
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_Update()
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_COMMON_SCHEMA_NM))
             {
                 UpdateOnDts = DateTime.Now;
                 UpdateByUid = AppInfo.UserID;
 
-                var dal = dalManager.GetProvider<I_ARK_ENTITY>();
+                var dal = dalManager.GetProvider<I_ARK_TAG>();
                 var data = dal.UpdateItem(ToDto());
 
                 FromDto(data);
@@ -253,11 +246,11 @@ namespace Library.Domain
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_DeleteSelf()
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_COMMON_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ARK_ENTITY>();
+                var dal = dalManager.GetProvider<I_ARK_TAG>();
 
-                dal.DeleteItem (new K_ARK_ENTITY { objectID = this.ObjectID });
+                dal.DeleteItem (new K_ARK_TAG { objectID = this.ObjectID });
             }
         }
 
@@ -284,16 +277,16 @@ namespace Library.Domain
     /// Unit of Work Getter
     /// </summary>
     [Serializable]
-    public class ArkEntity_EditItem_Getter : EditItem_Getter_Base<ArkEntity_EditItem, ArkEntity_ItemCriteria>
+    public class ArkTag_EditItem_Getter : EditItem_Getter_Base<ArkTag_EditItem, ArkTag_ItemCriteria>
     {
         #region DataPortal
 
-        protected override void DataPortal_Fetch(ArkEntity_ItemCriteria aCriteria)
+        protected override void DataPortal_Fetch(ArkTag_ItemCriteria aCriteria)
         {
             if (aCriteria.HasKey)
-                EditItem = ArkEntity_EditItem.GetItem(aCriteria);
+                EditItem = ArkTag_EditItem.GetItem(aCriteria);
             else
-                EditItem = ArkEntity_EditItem.NewItem(aCriteria);
+                EditItem = ArkTag_EditItem.NewItem(aCriteria);
         }
 
         #endregion
@@ -303,22 +296,22 @@ namespace Library.Domain
     /// Editable List
     /// </summary>
     [Serializable]
-    public class ArkEntity_EditList : EditList_Base<ArkEntity_EditList, ArkEntity_ListCriteria, ArkEntity_EditItem, ArkEntity_ItemCriteria>
+    public class ArkTag_EditList : EditList_Base<ArkTag_EditList, ArkTag_ListCriteria, ArkTag_EditItem, ArkTag_ItemCriteria>
     {
         #region DataPortal
 
-        private void DataPortal_Fetch(ArkEntity_ListCriteria aCriteria)
+        private void DataPortal_Fetch(ArkTag_ListCriteria aCriteria)
         {
             var rlce = RaiseListChangedEvents;
             RaiseListChangedEvents = false;
 
-            using (var ctx = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var ctx = DalFactory.GetManager(DalFactory.ARK_COMMON_SCHEMA_NM))
             {
-                var dal = ctx.GetProvider<I_ARK_ENTITY>();
+                var dal = ctx.GetProvider<I_ARK_TAG>();
                 var list = dal.SelectList(aCriteria.ToDto());
 
                 foreach (var item in list)
-                    Add(DataPortal.FetchChild<ArkEntity_EditItem>(item));
+                    Add(DataPortal.FetchChild<ArkTag_EditItem>(item));
             }
 
             RaiseListChangedEvents = rlce;
@@ -327,7 +320,7 @@ namespace Library.Domain
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_Update()
         {
-            using (var ctx = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var ctx = DalFactory.GetManager(DalFactory.ARK_COMMON_SCHEMA_NM))
             {
                 Child_Update();
             }

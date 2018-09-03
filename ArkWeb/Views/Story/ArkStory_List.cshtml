@@ -11,15 +11,25 @@
 
 <form action="@Url.Action("ArkStory_List", "Story")" method="post">
     <div class="row">
-        <div class="form-group col-md-6">
-            @Html.LabelFor(x => x.ListCriteria.TitleTxt, "Story Title")
+        <div class="form-group col-md-3">
+            @Html.LabelFor(x => x.ListCriteria.TitleTxt, "Title")
             @Html.EditorFor(x => x.ListCriteria.TitleTxt, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(x => x.ListCriteria.TitleTxt, "", new { @class = "text-danger" })
         </div>
-        <div class="form-group col-md-6">
-            @Html.LabelFor(x => x.ListCriteria.LocationTxt, "Location")
-            @Html.EditorFor(x => x.ListCriteria.LocationTxt, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.ListCriteria.LocationTxt, "", new { @class = "text-danger" })
+        <div class="form-group col-md-3">
+            @Html.LabelFor(x => x.ListCriteria.FromEntryDt, "Dated From")
+            @Html.EditorFor(x => x.ListCriteria.FromEntryDt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.ListCriteria.FromEntryDt, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(x => x.ListCriteria.ThruEntryDt, "Dated Thru")
+            @Html.EditorFor(x => x.ListCriteria.ThruEntryDt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.ListCriteria.ThruEntryDt, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(x => x.ListCriteria.TagTxt, "Tags")
+            @Html.EditorFor(x => x.ListCriteria.TagTxt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.ListCriteria.TagTxt, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row text-center">
@@ -41,16 +51,18 @@
 <hr />
 
 <div class="row" style="font-weight:700">
-    <div class="col-md-5">Story Title</div>
-    <div class="col-md-5">Location</div>
+    <div class="col-md-3">Author</div>
+    <div class="col-md-5">Title</div>
+    <div class="col-md-2">Dated</div>
     <div class="col-md-2">Is Active</div>
 </div>
 
 @foreach (var item in Model.SimpleListModel)
 {
     <div class="row">
+        <div class="col-md-3">@Html.DisplayFor(x => item.AuthorNm)</div>
         <div class="col-md-5">@Html.ActionLink(item.TitleTxt, "ArkStory_Info", "Story", new { id = @item.ObjectID })</div>
-        <div class="col-md-5">@Html.DisplayFor(x => item.LocationTxt)</div>
+        <div class="col-md-2">@Html.DisplayFor(x => item.EntryDts)</div>
         <div class="col-md-2">@Html.DisplayFor(x => item.ActiveYn)</div>
     </div>
 }

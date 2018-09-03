@@ -68,6 +68,13 @@ namespace Library.Domain
             private set { LoadProperty(ClientID_Property, value); }
         }
 
+        public static readonly PropertyInfo<string> TagTxt_Property = RegisterProperty<string>(c => c.TagTxt);
+        public string TagTxt
+        {
+            get { return ReadProperty(TagTxt_Property); }
+            set { LoadProperty(TagTxt_Property, value); }
+        }
+
         public F_ARK_PROJECT ToDto()
         {
             F_ARK_PROJECT dto = new F_ARK_PROJECT();
@@ -76,6 +83,7 @@ namespace Library.Domain
             dto.descTxt   = DescTxt;
             dto.managerID = ManagerID;
             dto.clientID  = ClientID;
+            dto.tagTxt    = TagTxt;
 
             base.ToDto (dto);
 

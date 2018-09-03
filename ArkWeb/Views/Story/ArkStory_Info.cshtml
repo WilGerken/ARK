@@ -8,18 +8,23 @@
         <h3>@ViewData["Message"]</h3>
     </div>
 </div>
-@Html.HiddenFor(x => x.ModelObject.ObjectID)
-@Html.HiddenFor(x => x.ModelObject.VersionKey)
+
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(x => x.ModelObject.TitleTxt, "Story Title:")
+        @Html.LabelFor(x => x.ModelObject.AuthorNm, "Author:")
+        @Html.DisplayFor(x => x.ModelObject.AuthorNm, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(x => x.ModelObject.TitleTxt, "Title:")
         @Html.DisplayFor(x => x.ModelObject.TitleTxt, new { htmlAttributes = new { @class = "form-control" } })
     </div>
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(x => x.ModelObject.LocationTxt, "Location:")
-        @Html.DisplayFor(x => x.ModelObject.LocationTxt, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.LabelFor(x => x.ModelObject.EntryDts, "Dated:")
+        @Html.DisplayFor(x => x.ModelObject.EntryDts, new { htmlAttributes = new { @class = "form-control" } })
     </div>
 </div>
 <div class="row">

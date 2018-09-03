@@ -25,6 +25,7 @@ namespace Library.Resources.Entity
     {
         public string entityNm { get; set; }
         public string descTxt  { get; set; }
+        public string tagTxt   { get; set; }
 
         /// <summary>
         /// default constructor

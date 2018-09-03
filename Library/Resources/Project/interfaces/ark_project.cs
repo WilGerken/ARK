@@ -24,9 +24,10 @@ namespace Library.Resources.Project
     public class F_ARK_PROJECT : Data_F_Base
     {
         public string projectNm { get; set; }
-        public string descTxt   { get; set; }
         public int?   managerID { get; set; }
         public int?   clientID  { get; set; }
+        public string descTxt   { get; set; }
+        public string tagTxt    { get; set; }
 
         /// <summary>
         /// default constructor

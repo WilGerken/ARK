@@ -11,13 +11,18 @@
 
 <form action="@Url.Action("ArkEntity_List", "Entity")" method="post">
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             @Html.LabelFor(x => x.ListCriteria.EntityNm, "Entity Name")
             @Html.EditorFor(x => x.ListCriteria.EntityNm, new { htmlAttributes = new { @class = "form-control" } })
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             @Html.LabelFor(x => x.ListCriteria.DescTxt, "Description")
             @Html.EditorFor(x => x.ListCriteria.DescTxt, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(x => x.ListCriteria.TagTxt, "Tags")
+            @Html.EditorFor(x => x.ListCriteria.TagTxt, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(x => x.ListCriteria.TagTxt, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row text-center">

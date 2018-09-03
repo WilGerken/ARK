@@ -20,9 +20,26 @@ namespace Library.Domain
     {
         #region Properties
 
+        public static readonly PropertyInfo<int?> AuthorID_Property = RegisterProperty<int?>(c => c.AuthorID);
+        public int? AuthorID
+        {
+            get { return ReadProperty(AuthorID_Property); }
+            set { LoadProperty(AuthorID_Property, value); }
+        }
+
+        public static readonly PropertyInfo<string> TitleTxt_Property = RegisterProperty<string>(c => c.TitleTxt);
+        public string TitleTxt
+        {
+            get { return ReadProperty(TitleTxt_Property); }
+            set { LoadProperty(TitleTxt_Property, value); }
+        }
+
         public K_ARK_STORY ToDto()
         {
             K_ARK_STORY dto = new K_ARK_STORY();
+
+            dto.authorID = AuthorID;
+            dto.titleTxt = TitleTxt;
 
             base.ToDto(dto);
 
@@ -40,6 +57,13 @@ namespace Library.Domain
     {
         #region Properties
 
+        public static readonly PropertyInfo<int?> AuthorID_Property = RegisterProperty<int?>(c => c.AuthorID);
+        public int? AuthorID
+        {
+            get { return ReadProperty(AuthorID_Property); }
+            set { LoadProperty(AuthorID_Property, value); }
+        }
+
         public static readonly PropertyInfo<string> TitleTxt_Property = RegisterProperty<string>(c => c.TitleTxt);
         public string TitleTxt
         {
@@ -47,19 +71,44 @@ namespace Library.Domain
             set { LoadProperty(TitleTxt_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> LocationTxt_Property = RegisterProperty<string>(c => c.LocationTxt);
-        public string LocationTxt
+        public static readonly PropertyInfo<DateTime?> FromEntryDt_Property = RegisterProperty<DateTime?>(c => c.FromEntryDt);
+        public DateTime? FromEntryDt
         {
-            get { return ReadProperty(LocationTxt_Property); }
-            set { LoadProperty(LocationTxt_Property, value); }
+            get { return ReadProperty(FromEntryDt_Property); }
+            set { LoadProperty(FromEntryDt_Property, value); }
+        }
+
+        public static readonly PropertyInfo<DateTime?> ThruEntryDt_Property = RegisterProperty<DateTime?>(c => c.ThruEntryDt);
+        public DateTime? ThruEntryDt
+        {
+            get { return ReadProperty(ThruEntryDt_Property); }
+            set { LoadProperty(ThruEntryDt_Property, value); }
+        }
+
+        public static readonly PropertyInfo<string> NarrativeTxt_Property = RegisterProperty<string>(c => c.NarrativeTxt);
+        public string NarrativeTxt
+        {
+            get { return ReadProperty(NarrativeTxt_Property); }
+            set { LoadProperty(NarrativeTxt_Property, value); }
+        }
+
+        public static readonly PropertyInfo<string> TagTxt_Property = RegisterProperty<string>(c => c.TagTxt);
+        public string TagTxt
+        {
+            get { return ReadProperty(TagTxt_Property); }
+            set { LoadProperty(TagTxt_Property, value); }
         }
 
         public F_ARK_STORY ToDto()
         {
             F_ARK_STORY dto = new F_ARK_STORY();
 
-            dto.titleTxt    = TitleTxt;
-            dto.locationTxt = LocationTxt;
+            dto.authorID     = AuthorID;
+            dto.titleTxt     = TitleTxt;
+            dto.fromEntryDt  = FromEntryDt;
+            dto.thruEntryDt  = ThruEntryDt;
+            dto.narrativeTxt = NarrativeTxt;
+            dto.tagTxt       = TagTxt;
 
             base.ToDto(dto);
 
@@ -77,6 +126,20 @@ namespace Library.Domain
     {
         #region Properties
 
+        public static readonly PropertyInfo<int> AuthorID_Property = RegisterProperty<int>(c => c.AuthorID);
+        public int AuthorID
+        {
+            get { return ReadProperty(AuthorID_Property); }
+            private set { LoadProperty(AuthorID_Property, value); }
+        }
+
+        public static readonly PropertyInfo<string> AuthorNm_Property = RegisterProperty<string>(c => c.AuthorNm);
+        public string AuthorNm
+        {
+            get { return ReadProperty(AuthorNm_Property); }
+            private set { LoadProperty(AuthorNm_Property, value); }
+        }
+
         public static readonly PropertyInfo<string> TitleTxt_Property = RegisterProperty<string>(c => c.TitleTxt);
         public string TitleTxt
         {
@@ -84,11 +147,11 @@ namespace Library.Domain
             private set { LoadProperty(TitleTxt_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> LocationTxt_Property = RegisterProperty<string>(c => c.LocationTxt);
-        public string LocationTxt
+        public static readonly PropertyInfo<DateTime> EntryDts_Property = RegisterProperty<DateTime>(c => c.EntryDts);
+        public DateTime EntryDts
         {
-            get { return ReadProperty(LocationTxt_Property); }
-            private set { LoadProperty(LocationTxt_Property, value); }
+            get { return ReadProperty(EntryDts_Property); }
+            private set { LoadProperty(EntryDts_Property, value); }
         }
 
         public static readonly PropertyInfo<string> NarrativeTxt_Property = RegisterProperty<string>(c => c.NarrativeTxt);
@@ -100,8 +163,10 @@ namespace Library.Domain
 
         public void FromDto (D_ARK_STORY dto)
         {
+            AuthorID     = dto.authorID;
+            AuthorNm     = dto.authorNm;
             TitleTxt     = dto.titleTxt;
-            LocationTxt  = dto.locationTxt;
+            EntryDts     = dto.entryDts;
             NarrativeTxt = dto.narrativeTxt;
 
             base.FromDto (dto);
@@ -162,6 +227,21 @@ namespace Library.Domain
     {
         #region Properties
 
+        public static readonly PropertyInfo<int> AuthorID_Property = RegisterProperty<int>(c => c.AuthorID);
+        [Required]
+        public int AuthorID
+        {
+            get { return GetProperty(AuthorID_Property); }
+            set { SetProperty(AuthorID_Property, value); }
+        }
+
+        public static readonly PropertyInfo<string> AuthorNm_Property = RegisterProperty<string>(c => c.AuthorNm);
+        public string AuthorNm
+        {
+            get { return GetProperty(AuthorNm_Property); }
+            set { SetProperty(AuthorNm_Property, value); }
+        }
+
         public static readonly PropertyInfo<string> TitleTxt_Property = RegisterProperty<string>(c => c.TitleTxt);
         [Required]
         public string TitleTxt
@@ -170,12 +250,12 @@ namespace Library.Domain
             set { SetProperty(TitleTxt_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> LocationTxt_Property = RegisterProperty<string>(c => c.LocationTxt);
+        public static readonly PropertyInfo<DateTime> EntryDts_Property = RegisterProperty<DateTime>(c => c.EntryDts);
         [Required]
-        public string LocationTxt
+        public DateTime EntryDts
         {
-            get { return GetProperty(LocationTxt_Property); }
-            set { SetProperty(LocationTxt_Property, value); }
+            get { return GetProperty(EntryDts_Property); }
+            set { SetProperty(EntryDts_Property, value); }
         }
 
         public static readonly PropertyInfo<string> NarrativeTxt_Property = RegisterProperty<string>(c => c.NarrativeTxt);
@@ -190,9 +270,12 @@ namespace Library.Domain
         {
             using (BypassPropertyChecks)
             {
+                AuthorID = dto.authorID;
                 TitleTxt     = dto.titleTxt;
-                LocationTxt  = dto.locationTxt;
+                EntryDts     = dto.entryDts;
                 NarrativeTxt = dto.narrativeTxt;
+
+                AuthorNm = dto.authorNm;
 
                 base.FromDto (dto);
             }
@@ -202,8 +285,9 @@ namespace Library.Domain
         {
             D_ARK_STORY dto = new D_ARK_STORY();
 
+            dto.authorID     = AuthorID;
             dto.titleTxt     = TitleTxt;
-            dto.locationTxt  = LocationTxt;
+            dto.entryDts     = EntryDts;
             dto.narrativeTxt = NarrativeTxt;
 
             base.ToDto (dto);

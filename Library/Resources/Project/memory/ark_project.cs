@@ -22,21 +22,21 @@ namespace Library.Resources.Project.memory
             ResourceList.Add(new D_ARK_PROJECT
             {
                 objectID = lID++,
-                projectNm = "Project One",
-                descTxt = "Another Test Project",
+                projectNm = "Community Well",
+                descTxt = "Building a Well for Community One",
                 managerID = 3,
                 clientID = 7,
-                createByUid = 1,
-                updateByUid = 1
+                createByUid = Ref.AdminID,
+                updateByUid = Ref.AdminID
             });
             ResourceList.Add(new D_ARK_PROJECT
             {
                 objectID = lID++,
                 projectNm = "Project Two",
-                descTxt = "Another Test Project",
+                descTxt = "Build a School for Community One",
                 clientID = 8,
-                createByUid = 1,
-                updateByUid = 1
+                createByUid = Ref.AdminID,
+                updateByUid = Ref.AdminID
             });
             ResourceList.Add (new D_ARK_PROJECT
             {
@@ -45,8 +45,8 @@ namespace Library.Resources.Project.memory
                 descTxt = "Another Test Project",
                 managerID = 4,
                 clientID = 7,
-                createByUid = 1,
-                updateByUid = 1
+                createByUid = Ref.AdminID,
+                updateByUid = Ref.AdminID
             });
             ResourceList.Add(new D_ARK_PROJECT
             {
@@ -54,8 +54,8 @@ namespace Library.Resources.Project.memory
                 projectNm = "Project Four",
                 descTxt = "Another Test Project",
                 managerID = 5,
-                createByUid = 1,
-                updateByUid = 1
+                createByUid = Ref.AdminID,
+                updateByUid = Ref.AdminID
             });
             ResourceList.Add(new D_ARK_PROJECT
             {
@@ -64,8 +64,8 @@ namespace Library.Resources.Project.memory
                 descTxt = "Another Test Project",
                 managerID = 6,
                 clientID = 7,
-                createByUid = 1,
-                updateByUid = 1
+                createByUid = Ref.AdminID,
+                updateByUid = Ref.AdminID
             });
         }
 
@@ -76,30 +76,30 @@ namespace Library.Resources.Project.memory
         /// <returns></returns>
         public List<D_ARK_PROJECT> SelectList (F_ARK_PROJECT aFilter)
         {
-            IEnumerable<D_ARK_PROJECT> lResult = (from item in ResourceList
-                                                  from managerItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.managerID).DefaultIfEmpty()
-                                                  from clientItem  in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.clientID).DefaultIfEmpty()
-                                                  from createItem  in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
-                                                  from updateItem  in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
-                                                  select new D_ARK_PROJECT
-                                                  {
-                                                      objectID = item.objectID,
-                                                      projectNm = item.projectNm,
-                                                      descTxt = item.descTxt,
-                                                      managerID = item.managerID,
-                                                      managerNm = managerItem != null ? managerItem.entityNm : string.Empty,
-                                                      clientID = item.clientID,
-                                                      clientNm = clientItem != null ? clientItem.entityNm : string.Empty,
+            var lResult = (from item in ResourceList
+                           from managerItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.managerID).DefaultIfEmpty()
+                           from clientItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.clientID).DefaultIfEmpty()
+                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                           select new D_ARK_PROJECT
+                           {
+                               objectID = item.objectID,
+                               projectNm = item.projectNm,
+                               descTxt = item.descTxt,
+                               managerID = item.managerID,
+                               managerNm = managerItem != null ? managerItem.entityNm : string.Empty,
+                               clientID = item.clientID,
+                               clientNm = clientItem != null ? clientItem.entityNm : string.Empty,
 
-                                                      activeYn = item.activeYn,
-                                                      createByUid = item.createByUid,
-                                                      createByNm = createItem != null ? createItem.entityNm : string.Empty,
-                                                      createOnDts = item.createOnDts,
-                                                      updateByUid = item.updateByUid,
-                                                      updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
-                                                      updateOnDts = item.updateOnDts,
-                                                      versionKey = item.versionKey
-                                                  });
+                               activeYn = item.activeYn,
+                               createByUid = item.createByUid,
+                               createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                               createOnDts = item.createOnDts,
+                               updateByUid = item.updateByUid,
+                               updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                               updateOnDts = item.updateOnDts,
+                               versionKey = item.versionKey
+                           });
 
             // apply filter attributes
             if (! string.IsNullOrEmpty (aFilter.projectNm))
@@ -142,30 +142,30 @@ namespace Library.Resources.Project.memory
         {
             D_ARK_PROJECT lResult = null;
 
-            IEnumerable<D_ARK_PROJECT> lQuery = (from item in ResourceList
-                                                 from managerItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.managerID).DefaultIfEmpty()
-                                                 from clientItem  in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.clientID).DefaultIfEmpty()
-                                                 from createItem  in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
-                                                 from updateItem  in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
-                                                 select new D_ARK_PROJECT
-                                                 {
-                                                     objectID = item.objectID,
-                                                     projectNm = item.projectNm,
-                                                     descTxt = item.descTxt,
-                                                     managerID = item.managerID,
-                                                     managerNm = managerItem != null ? managerItem.entityNm : string.Empty,
-                                                     clientID = item.clientID,
-                                                     clientNm = clientItem != null ? clientItem.entityNm : string.Empty,
+            var lQuery = (from item in ResourceList
+                          from managerItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.managerID).DefaultIfEmpty()
+                          from clientItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.clientID).DefaultIfEmpty()
+                          from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                          from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                          select new D_ARK_PROJECT
+                          {
+                              objectID = item.objectID,
+                              projectNm = item.projectNm,
+                              descTxt = item.descTxt,
+                              managerID = item.managerID,
+                              managerNm = managerItem != null ? managerItem.entityNm : string.Empty,
+                              clientID = item.clientID,
+                              clientNm = clientItem != null ? clientItem.entityNm : string.Empty,
 
-                                                     activeYn = item.activeYn,
-                                                     createByUid = item.createByUid,
-                                                     createByNm = createItem != null ? createItem.entityNm : string.Empty,
-                                                     createOnDts = item.createOnDts,
-                                                     updateByUid = item.updateByUid,
-                                                     updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
-                                                     updateOnDts = item.updateOnDts,
-                                                     versionKey = item.versionKey
-                                                  });
+                              activeYn = item.activeYn,
+                              createByUid = item.createByUid,
+                              createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                              createOnDts = item.createOnDts,
+                              updateByUid = item.updateByUid,
+                              updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                              updateOnDts = item.updateOnDts,
+                              versionKey = item.versionKey
+                          });
 
             // apply key attributes
             if (aKey.objectID.HasValue)
@@ -235,9 +235,13 @@ namespace Library.Resources.Project.memory
         /// <param name="aKey"></param>
         public void DeleteItem (K_ARK_PROJECT aKey)
         {
+            // fetch indicated item
+            D_ARK_PROJECT lItem = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+
+            // delete item from list
             lock (ResourceList)
             {
-
+                ResourceList.Remove (lItem);
             }
         }
     }

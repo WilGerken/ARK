@@ -62,8 +62,10 @@ namespace ArkWeb.Models
                     return ModelObject.Select(x => new ArkStory_ViewModel_ListItem
                     {
                         ObjectID     = x.ObjectID,
+                        AuthorID     = x.AuthorID,
+                        AuthorNm     = x.AuthorNm,
                         TitleTxt     = x.TitleTxt,
-                        LocationTxt  = x.LocationTxt,
+                        EntryDts     = x.EntryDts,
                         NarrativeTxt = x.NarrativeTxt,
                         ActiveYn     = x.ActiveYn
                     }).ToList();
@@ -75,11 +77,13 @@ namespace ArkWeb.Models
 
     public class ArkStory_ViewModel_ListItem
     {
-        public int    ObjectID     { get; set; }
-        public string TitleTxt     { get; set; }
-        public string LocationTxt  { get; set; }
-        public string NarrativeTxt { get; set; }
-        public bool   ActiveYn     { get; set; }
+        public int      ObjectID     { get; set; }
+        public int      AuthorID     { get; set; }
+        public string   AuthorNm     { get; set; }
+        public string   TitleTxt     { get; set; }
+        public DateTime EntryDts     { get; set; }
+        public string   NarrativeTxt { get; set; }
+        public bool     ActiveYn     { get; set; }
     }
 
     /// <summary>
