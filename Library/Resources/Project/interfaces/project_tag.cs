@@ -25,7 +25,7 @@ namespace Library.Resources.Project
     {
         public int?   projectID { get; set; }
         public int?   tagID     { get; set; }
-        public string typeTxt   { get; set; }
+        public int?   typeID    { get; set; }
 
         /// <summary>
         /// default constructor
@@ -39,7 +39,7 @@ namespace Library.Resources.Project
     public class K_PROJECT_TAG : Data_K_Base
     {
         public int? projectID { get; set; }
-        public int? tagID    { get; set; }
+        public int? tagID     { get; set; }
     }
 
     /// <summary>
@@ -48,7 +48,10 @@ namespace Library.Resources.Project
     public class D_PROJECT_TAG : Data_O_Base
     {
         public int    projectID { get; set; }
+        public string projectNm { get; set; }
         public int    tagID     { get; set; }
+        public string tagTxt    { get; set; }
+        public int?   typeID    { get; set; }
         public string typeTxt   { get; set; }
 
         /// <summary>

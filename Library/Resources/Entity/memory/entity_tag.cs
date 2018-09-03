@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Library.Common;
+using Library.Resources.Common.memory;
 
 namespace Library.Resources.Entity.memory
 {
@@ -16,16 +17,12 @@ namespace Library.Resources.Entity.memory
 
         static ENTITY_TAG ()
         {
-            //int lID = Ref.AdminID;
+            int lID = Ref.AdminID;
 
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "Water",           createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "English",         createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "Spanish",         createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "German",          createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "Plumber",         createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "Carpenter",       createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "Project Manager", createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagTxt = "Client",          createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            ResourceList.Add(new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagID = 1, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            ResourceList.Add(new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagID = 1, typeID = 2, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            ResourceList.Add(new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagID = 2, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            ResourceList.Add(new D_ENTITY_TAG { objectID = lID++, entityID = 1, tagID = 3, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
         }
 
         /// <summary>
@@ -35,7 +32,31 @@ namespace Library.Resources.Entity.memory
         /// <returns></returns>
         public List<D_ENTITY_TAG> SelectList (F_ENTITY_TAG aFilter)
         {
-            IEnumerable<D_ENTITY_TAG> lResult = ResourceList;
+            var lResult = (from item in ResourceList
+                           join entityItem in ARK_ENTITY.ResourceList on item.entityID equals entityItem.objectID
+                           join tagItem    in ARK_TAG.ResourceList on item.tagID equals tagItem.objectID
+                           from typeItem   in TAG_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                           select new D_ENTITY_TAG
+                           {
+                               objectID = item.objectID,
+                               entityID = item.entityID,
+                               entityNm = item.entityNm,
+                               tagID    = item.tagID,
+                               tagTxt   = tagItem.tagTxt,
+                               typeID   = item.typeID,
+                               typeTxt  = typeItem != null ? typeItem.typeTxt : string.Empty,
+
+                               activeYn = item.activeYn,
+                               createByUid = item.createByUid,
+                               createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                               createOnDts = item.createOnDts,
+                               updateByUid = item.updateByUid,
+                               updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                               updateOnDts = item.updateOnDts,
+                               versionKey = item.versionKey
+                           });
 
             // apply filter attributes
             if (aFilter.entityID.HasValue)
@@ -48,9 +69,9 @@ namespace Library.Resources.Entity.memory
                 lResult = lResult.Where(x => x.tagID == aFilter.tagID.Value);
             }
 
-            if (! string.IsNullOrEmpty (aFilter.typeTxt))
+            if (aFilter.typeID.HasValue)
             {
-                lResult = lResult.Where (x => x.typeTxt.Contains (aFilter.typeTxt));
+                lResult = lResult.Where(x => x.typeID == aFilter.typeID.Value);
             }
 
             // check base criteria
@@ -78,9 +99,35 @@ namespace Library.Resources.Entity.memory
         {
             D_ENTITY_TAG lResult = null;
 
+            var lQuery = (from item in ResourceList
+                          join entityItem in ARK_ENTITY.ResourceList on item.entityID equals entityItem.objectID
+                          join tagItem in ARK_TAG.ResourceList on item.tagID equals tagItem.objectID
+                          from typeItem in TAG_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                          from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                          from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                          select new D_ENTITY_TAG
+                          {
+                              objectID = item.objectID,
+                              entityID = item.entityID,
+                              entityNm = item.entityNm,
+                              tagID = item.tagID,
+                              tagTxt = tagItem.tagTxt,
+                              typeID = item.typeID,
+                              typeTxt = typeItem != null ? typeItem.typeTxt : string.Empty,
+
+                              activeYn = item.activeYn,
+                              createByUid = item.createByUid,
+                              createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                              createOnDts = item.createOnDts,
+                              updateByUid = item.updateByUid,
+                              updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                              updateOnDts = item.updateOnDts,
+                              versionKey = item.versionKey
+                          });
+
             // apply key attributes
             if (aKey.objectID.HasValue)
-                lResult = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+                lResult = lQuery.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // throw exception if not found
             if (lResult == null)
@@ -107,7 +154,7 @@ namespace Library.Resources.Entity.memory
                 objectID = lID,
                 entityID = aDto.entityID,
                 tagID    = aDto.tagID,
-                typeTxt  = aDto.typeTxt,
+                typeID   = aDto.typeID,
 
                 activeYn    = aDto.activeYn,
                 createByUid = aDto.createByUid,
@@ -139,7 +186,7 @@ namespace Library.Resources.Entity.memory
             {
                 lItem.entityID = aDto.entityID;
                 lItem.tagID    = aDto.tagID;
-                lItem.typeTxt  = aDto.typeTxt;
+                lItem.typeID   = aDto.typeID;
 
                 lItem.activeYn    = aDto.activeYn;
                 lItem.createByUid = aDto.createByUid;

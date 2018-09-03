@@ -135,8 +135,8 @@ namespace Library.Domain
             {
                 Insert(0, DataPortal.FetchChild<ArkEntity_InfoItem>(new D_ARK_ENTITY
                 {
-                    entityNm = aCriteria.SelectOption_Text,
-                    objectID = aCriteria.SelectOption_Value.Value
+                    selectTxt = aCriteria.SelectOption_Text,
+                    objectID  = aCriteria.SelectOption_Value.Value
                 }));
             }
 
@@ -198,6 +198,18 @@ namespace Library.Domain
             base.ToDto (dto);
 
             return dto;
+        }
+
+        public static readonly PropertyInfo<EntityTag_EditList> EntityTagList_Property =
+            RegisterProperty<EntityTag_EditList>(p => p.EntityTagList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public EntityTag_EditList EntityTagList
+        {
+            get
+            {
+                return LazyGetProperty(EntityTagList_Property,
+                    () => DataPortal.Fetch<EntityTag_EditList>(new EntityTag_ListCriteria { EntityID = ReadProperty(ObjectID_Property) }));
+            }
+            private set { LoadProperty(EntityTagList_Property, value); }
         }
 
         #endregion

@@ -25,7 +25,7 @@ namespace Library.Resources.Entity
     {
         public int?   entityID { get; set; }
         public int?   tagID    { get; set; }
-        public string typeTxt  { get; set; }
+        public int?   typeID   { get; set; }
 
         /// <summary>
         /// default constructor
@@ -48,7 +48,10 @@ namespace Library.Resources.Entity
     public class D_ENTITY_TAG : Data_O_Base
     {
         public int    entityID { get; set; }
+        public string entityNm { get; set; }
         public int    tagID    { get; set; }
+        public string tagTxt   { get; set; }
+        public int?   typeID   { get; set; }
         public string typeTxt  { get; set; }
 
         /// <summary>

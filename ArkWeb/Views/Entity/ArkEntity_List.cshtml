@@ -43,17 +43,21 @@
 
 <hr />
 
-<div class="row" style="font-weight:700">
-    <div class="col-md-4">Name</div>
-    <div class="col-md-6">Description</div>
-    <div class="col-md-2">Is Active</div>
-</div>
+<div class="container">
 
-@foreach (var item in Model.SimpleListModel)
-{
-    <div class="row">
-        <div class="col-md-4">@Html.ActionLink(item.EntityNm, "ArkEntity_Info", "Entity", new { id = @item.ObjectID })</div>
-        <div class="col-md-6">@Html.DisplayFor(x => item.DescTxt)</div>
-        <div class="col-md-2">@Html.DisplayFor(x => item.ActiveYn)</div>
+    <div class="row" style="font-weight:700">
+        <div class="col-md-4">Name</div>
+        <div class="col-md-6">Description</div>
+        <div class="col-md-2">Is Active</div>
     </div>
-}
+
+    @foreach (var item in Model.SimpleListModel)
+    {
+        <div class="row">
+            <div class="col-md-4">@Html.ActionLink(item.EntityNm, "ArkEntity_Info", "Entity", new { id = @item.ObjectID })</div>
+            <div class="col-md-6">@Html.DisplayFor(x => item.DescTxt)</div>
+            <div class="col-md-2">@Html.DisplayFor(x => item.ActiveYn)</div>
+        </div>
+    }
+
+</div>

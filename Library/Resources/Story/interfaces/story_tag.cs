@@ -25,7 +25,7 @@ namespace Library.Resources.Story
     {
         public int?   storyID { get; set; }
         public int?   tagID   { get; set; }
-        public string typeTxt { get; set; }
+        public int?   typeID  { get; set; }
 
         /// <summary>
         /// default constructor
@@ -47,9 +47,12 @@ namespace Library.Resources.Story
     /// </summary>
     public class D_STORY_TAG : Data_O_Base
     {
-        public int    storyID { get; set; }
-        public int    tagID   { get; set; }
-        public string typeTxt { get; set; }
+        public int    storyID  { get; set; }
+        public string titleTxt { get; set; }
+        public int    tagID    { get; set; }
+        public string tagTxt   { get; set; }
+        public int?   typeID   { get; set; }
+        public string typeTxt  { get; set; }
 
         /// <summary>
         /// default constructo

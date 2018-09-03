@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Library.Common;
+using Library.Resources.Story.memory;
+using Library.Resources.Common.memory;
+using Library.Resources.Entity.memory;
 
 namespace Library.Resources.Story.memory
 {
@@ -35,7 +38,31 @@ namespace Library.Resources.Story.memory
         /// <returns></returns>
         public List<D_STORY_TAG> SelectList (F_STORY_TAG aFilter)
         {
-            IEnumerable<D_STORY_TAG> lResult = ResourceList;
+            var lResult = (from item in ResourceList
+                           join storyItem in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
+                           join tagItem in ARK_TAG.ResourceList on item.tagID equals tagItem.objectID
+                           from typeItem in TAG_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                           select new D_STORY_TAG
+                           {
+                               objectID = item.objectID,
+                               storyID = item.storyID,
+                               titleTxt = storyItem.titleTxt,
+                               tagID = item.tagID,
+                               tagTxt = tagItem.tagTxt,
+                               typeID = item.typeID,
+                               typeTxt = typeItem != null ? typeItem.typeTxt : string.Empty,
+
+                               activeYn = item.activeYn,
+                               createByUid = item.createByUid,
+                               createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                               createOnDts = item.createOnDts,
+                               updateByUid = item.updateByUid,
+                               updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                               updateOnDts = item.updateOnDts,
+                               versionKey = item.versionKey
+                           });
 
             // apply filter attributes
             if (aFilter.storyID.HasValue)
@@ -48,9 +75,9 @@ namespace Library.Resources.Story.memory
                 lResult = lResult.Where(x => x.tagID == aFilter.tagID.Value);
             }
 
-            if (! string.IsNullOrEmpty (aFilter.typeTxt))
+            if (aFilter.typeID.HasValue)
             {
-                lResult = lResult.Where (x => x.typeTxt.Contains (aFilter.typeTxt));
+                lResult = lResult.Where(x => x.typeID == aFilter.typeID.Value);
             }
 
             // check base criteria
@@ -78,9 +105,35 @@ namespace Library.Resources.Story.memory
         {
             D_STORY_TAG lResult = null;
 
+            var lQuery = (from item in ResourceList
+                           join storyItem in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
+                           join tagItem in ARK_TAG.ResourceList on item.tagID equals tagItem.objectID
+                           from typeItem in TAG_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                           select new D_STORY_TAG
+                           {
+                               objectID = item.objectID,
+                               storyID = item.storyID,
+                               titleTxt = storyItem.titleTxt,
+                               tagID = item.tagID,
+                               tagTxt = tagItem.tagTxt,
+                               typeID = item.typeID,
+                               typeTxt = typeItem != null ? typeItem.typeTxt : string.Empty,
+
+                               activeYn = item.activeYn,
+                               createByUid = item.createByUid,
+                               createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                               createOnDts = item.createOnDts,
+                               updateByUid = item.updateByUid,
+                               updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                               updateOnDts = item.updateOnDts,
+                               versionKey = item.versionKey
+                           });
+
             // apply key attributes
             if (aKey.objectID.HasValue)
-                lResult = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+                lResult = lQuery.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // throw exception if not found
             if (lResult == null)
@@ -107,7 +160,7 @@ namespace Library.Resources.Story.memory
                 objectID  = lID,
                 storyID   = aDto.storyID,
                 tagID     = aDto.tagID,
-                typeTxt   = aDto.typeTxt,
+                typeID    = aDto.typeID,
 
                 activeYn    = aDto.activeYn,
                 createByUid = aDto.createByUid,
@@ -139,7 +192,7 @@ namespace Library.Resources.Story.memory
             {
                 lItem.storyID   = aDto.storyID;
                 lItem.tagID     = aDto.tagID;
-                lItem.typeTxt   = aDto.typeTxt;
+                lItem.typeID    = aDto.typeID;
 
                 lItem.activeYn    = aDto.activeYn;
                 lItem.createByUid = aDto.createByUid;

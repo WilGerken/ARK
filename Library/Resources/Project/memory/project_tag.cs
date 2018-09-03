@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Library.Common;
+using Library.Resources.Entity.memory;
+using Library.Resources.Common.memory;
 
 namespace Library.Resources.Project.memory
 {
@@ -35,7 +37,31 @@ namespace Library.Resources.Project.memory
         /// <returns></returns>
         public List<D_PROJECT_TAG> SelectList (F_PROJECT_TAG aFilter)
         {
-            IEnumerable<D_PROJECT_TAG> lResult = ResourceList;
+            var lResult = (from item in ResourceList
+                           join projectItem in ARK_PROJECT.ResourceList on item.projectID equals projectItem.objectID
+                           join tagItem in ARK_TAG.ResourceList on item.tagID equals tagItem.objectID
+                           from typeItem in TAG_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                           select new D_PROJECT_TAG
+                           {
+                               objectID = item.objectID,
+                               projectID = item.projectID,
+                               projectNm = projectItem.projectNm,
+                               tagID = item.tagID,
+                               tagTxt = tagItem.tagTxt,
+                               typeID = item.typeID,
+                               typeTxt = typeItem != null ? typeItem.typeTxt : string.Empty,
+
+                               activeYn = item.activeYn,
+                               createByUid = item.createByUid,
+                               createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                               createOnDts = item.createOnDts,
+                               updateByUid = item.updateByUid,
+                               updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                               updateOnDts = item.updateOnDts,
+                               versionKey = item.versionKey
+                           });
 
             // apply filter attributes
             if (aFilter.projectID.HasValue)
@@ -48,9 +74,9 @@ namespace Library.Resources.Project.memory
                 lResult = lResult.Where(x => x.tagID == aFilter.tagID.Value);
             }
 
-            if (!string.IsNullOrEmpty (aFilter.typeTxt))
+            if (aFilter.typeID.HasValue)
             {
-                lResult = lResult.Where (x => x.typeTxt.Contains (aFilter.typeTxt));
+                lResult = lResult.Where(x => x.typeID == aFilter.typeID.Value);
             }
 
             // check base criteria
@@ -78,9 +104,35 @@ namespace Library.Resources.Project.memory
         {
             D_PROJECT_TAG lResult = null;
 
+            var lQuery = (from item in ResourceList
+                           join projectItem in ARK_PROJECT.ResourceList on item.projectID equals projectItem.objectID
+                           join tagItem in ARK_TAG.ResourceList on item.tagID equals tagItem.objectID
+                           from typeItem in TAG_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
+                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
+                           select new D_PROJECT_TAG
+                           {
+                               objectID = item.objectID,
+                               projectID = item.projectID,
+                               projectNm = projectItem.projectNm,
+                               tagID = item.tagID,
+                               tagTxt = tagItem.tagTxt,
+                               typeID = item.typeID,
+                               typeTxt = typeItem != null ? typeItem.typeTxt : string.Empty,
+
+                               activeYn = item.activeYn,
+                               createByUid = item.createByUid,
+                               createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                               createOnDts = item.createOnDts,
+                               updateByUid = item.updateByUid,
+                               updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                               updateOnDts = item.updateOnDts,
+                               versionKey = item.versionKey
+                           });
+
             // apply key attributes
             if (aKey.objectID.HasValue)
-                lResult = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+                lResult = lQuery.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // throw exception if not found
             if (lResult == null)
@@ -107,7 +159,7 @@ namespace Library.Resources.Project.memory
                 objectID  = lID,
                 projectID = aDto.projectID,
                 tagID     = aDto.tagID,
-                typeTxt   = aDto.typeTxt,
+                typeID    = aDto.typeID,
 
                 activeYn    = aDto.activeYn,
                 createByUid = aDto.createByUid,
@@ -139,7 +191,7 @@ namespace Library.Resources.Project.memory
             {
                 lItem.projectID = aDto.projectID;
                 lItem.tagID     = aDto.tagID;
-                lItem.typeTxt   = aDto.typeTxt;
+                lItem.typeID    = aDto.typeID;
 
                 lItem.activeYn    = aDto.activeYn;
                 lItem.createByUid = aDto.createByUid;
