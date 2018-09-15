@@ -35,8 +35,8 @@ namespace Library.Resources.Entity.memory
         {
             var lResult = (from item in ResourceList
                            join entityItem in ARK_ENTITY.ResourceList on item.entityID equals entityItem.objectID
-                           join storyItem  in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
-                           from typeItem   in ENTITY_STORY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                           join storyItem in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
+                           from roleItem in ENTITY_STORY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.roleID).DefaultIfEmpty()
                            from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
                            from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
                            select new D_ENTITY_STORY
@@ -44,11 +44,11 @@ namespace Library.Resources.Entity.memory
                                objectID = item.objectID,
                                entityID = item.entityID,
                                entityNm = item.entityNm,
-                               storyID  = item.storyID,
+                               storyID = item.storyID,
                                titleTxt = storyItem.titleTxt,
-                               typeID   = item.typeID,
-                               typeTxt  = typeItem.typeTxt,
-                               descTxt  = item.descTxt,
+                               roleID = item.roleID,
+                               roleTxt = roleItem.typeTxt,
+                               descTxt = item.descTxt,
 
                                activeYn = item.activeYn,
                                createByUid = item.createByUid,
@@ -71,9 +71,9 @@ namespace Library.Resources.Entity.memory
                 lResult = lResult.Where(x => x.storyID == aFilter.storyID.Value);
             }
 
-            if (aFilter.typeID.HasValue)
+            if (aFilter.roleID.HasValue)
             {
-                lResult = lResult.Where(x => x.typeID == aFilter.typeID.Value);
+                lResult = lResult.Where(x => x.roleID == aFilter.roleID.Value);
             }
 
             // check base criteria
@@ -104,7 +104,7 @@ namespace Library.Resources.Entity.memory
             var lQuery = (from item in ResourceList
                           join entityItem in ARK_ENTITY.ResourceList on item.entityID equals entityItem.objectID
                           join storyItem  in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
-                          from typeItem   in ENTITY_STORY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.typeID).DefaultIfEmpty()
+                          from roleItem   in ENTITY_STORY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.roleID).DefaultIfEmpty()
                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
                           select new D_ENTITY_STORY
@@ -114,8 +114,8 @@ namespace Library.Resources.Entity.memory
                               entityNm = item.entityNm,
                               storyID = item.storyID,
                               titleTxt = storyItem.titleTxt,
-                              typeID = item.typeID,
-                              typeTxt = typeItem.typeTxt,
+                              roleID = item.roleID,
+                              roleTxt = roleItem.typeTxt,
                               descTxt = item.descTxt,
 
                               activeYn = item.activeYn,
@@ -157,7 +157,7 @@ namespace Library.Resources.Entity.memory
                 objectID = lID,
                 entityID = aDto.entityID,
                 storyID  = aDto.storyID,
-                typeID   = aDto.typeID,
+                roleID   = aDto.roleID,
                 descTxt  = aDto.descTxt,
 
                 activeYn    = aDto.activeYn,
@@ -190,7 +190,7 @@ namespace Library.Resources.Entity.memory
             {
                 lItem.entityID = aDto.entityID;
                 lItem.storyID  = aDto.storyID;
-                lItem.typeID   = aDto.typeID;
+                lItem.roleID   = aDto.roleID;
                 lItem.descTxt  = aDto.descTxt;
 
                 lItem.activeYn    = aDto.activeYn;

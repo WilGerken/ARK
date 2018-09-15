@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Library.Common;
 using Library.Resources;
-using Library.Resources.Entity;
+using Library.Resources.Project;
 using Csla;
 
 namespace Library.Domain
@@ -16,15 +16,15 @@ namespace Library.Domain
     /// Item Criteria
     /// </summary>
     [Serializable]
-    public class EntityTag_ItemCriteria : ItemCriteria_Base<EntityTag_ItemCriteria>
+    public class ProjectTag_ItemCriteria : ItemCriteria_Base<ProjectTag_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int?> EntityID_Property = RegisterProperty<int?>(c => c.EntityID);
-        public int? EntityID
+        public static readonly PropertyInfo<int?> ProjectID_Property = RegisterProperty<int?>(c => c.ProjectID);
+        public int? ProjectID
         {
-            get { return ReadProperty(EntityID_Property); }
-            set { LoadProperty(EntityID_Property, value); }
+            get { return ReadProperty(ProjectID_Property); }
+            set { LoadProperty(ProjectID_Property, value); }
         }
 
         public static readonly PropertyInfo<int?> TagID_Property = RegisterProperty<int?>(c => c.TagID);
@@ -34,11 +34,11 @@ namespace Library.Domain
             set { LoadProperty(TagID_Property, value); }
         }
 
-        public K_ENTITY_TAG ToDto()
+        public K_PROJECT_TAG ToDto()
         {
-            K_ENTITY_TAG dto = new K_ENTITY_TAG();
+            K_PROJECT_TAG dto = new K_PROJECT_TAG();
 
-            dto.entityID = EntityID;
+            dto.projectID = ProjectID;
             dto.tagID = TagID;
 
             base.ToDto(dto);
@@ -53,15 +53,15 @@ namespace Library.Domain
     /// List Criteria
     /// </summary>
     [Serializable]
-    public class EntityTag_ListCriteria : ListCriteria_Base<EntityTag_ListCriteria>
+    public class ProjectTag_ListCriteria : ListCriteria_Base<ProjectTag_ListCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int?> EntityID_Property = RegisterProperty<int?>(c => c.EntityID);
-        public int? EntityID
+        public static readonly PropertyInfo<int?> ProjectID_Property = RegisterProperty<int?>(c => c.ProjectID);
+        public int? ProjectID
         {
-            get { return ReadProperty(EntityID_Property); }
-            set { LoadProperty(EntityID_Property, value); }
+            get { return ReadProperty(ProjectID_Property); }
+            set { LoadProperty(ProjectID_Property, value); }
         }
 
         public static readonly PropertyInfo<int?> TagID_Property = RegisterProperty<int?>(c => c.TagID);
@@ -78,13 +78,13 @@ namespace Library.Domain
             set { LoadProperty(TypeID_Property, value); }
         }
 
-        public F_ENTITY_TAG ToDto()
+        public F_PROJECT_TAG ToDto()
         {
-            F_ENTITY_TAG dto = new F_ENTITY_TAG();
+            F_PROJECT_TAG dto = new F_PROJECT_TAG();
 
-            dto.entityID = EntityID;
-            dto.tagID    = TagID;
-            dto.typeID   = TypeID;
+            dto.projectID = ProjectID;
+            dto.tagID     = TagID;
+            dto.typeID    = TypeID;
 
             base.ToDto (dto);
 
@@ -98,22 +98,22 @@ namespace Library.Domain
     /// ReadOnly Item
     /// </summary>
     [Serializable]
-    public class EntityTag_InfoItem : InfoItem_Base<EntityTag_InfoItem, EntityTag_ItemCriteria>
+    public class ProjectTag_InfoItem : InfoItem_Base<ProjectTag_InfoItem, ProjectTag_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int> EntityID_Property = RegisterProperty<int>(c => c.EntityID);
-        public int EntityID
+        public static readonly PropertyInfo<int> ProjectID_Property = RegisterProperty<int>(c => c.ProjectID);
+        public int ProjectID
         {
-            get { return ReadProperty(EntityID_Property); }
-            private set { LoadProperty(EntityID_Property, value); }
+            get { return ReadProperty(ProjectID_Property); }
+            private set { LoadProperty(ProjectID_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> EntityNm_Property = RegisterProperty<string>(c => c.EntityNm);
-        public string EntityNm
+        public static readonly PropertyInfo<string> ProjectNm_Property = RegisterProperty<string>(c => c.ProjectNm);
+        public string ProjectNm
         {
-            get { return ReadProperty(EntityNm_Property); }
-            private set { LoadProperty(EntityNm_Property, value); }
+            get { return ReadProperty(ProjectNm_Property); }
+            private set { LoadProperty(ProjectNm_Property, value); }
         }
 
         public static readonly PropertyInfo<int> TagID_Property = RegisterProperty<int>(c => c.TagID);
@@ -144,14 +144,14 @@ namespace Library.Domain
             private set { LoadProperty(TypeTxt_Property, value); }
         }
 
-        public void FromDto (D_ENTITY_TAG dto)
+        public void FromDto (D_PROJECT_TAG dto)
         {
-            EntityID = dto.entityID;
-            EntityNm = dto.entityNm;
-            TagID    = dto.tagID;
-            TagTxt   = dto.tagTxt;
-            TypeID   = dto.typeID;
-            TypeTxt  = dto.typeTxt;
+            ProjectID = dto.projectID;
+            ProjectNm = dto.projectNm;
+            TagID     = dto.tagID;
+            TagTxt    = dto.tagTxt;
+            TypeID    = dto.typeID;
+            TypeTxt   = dto.typeTxt;
 
             base.FromDto (dto);
         }
@@ -160,7 +160,7 @@ namespace Library.Domain
 
         #region DataPortal
 
-        private void Child_Fetch(D_ENTITY_TAG dto) { FromDto(dto); }
+        private void Child_Fetch(D_PROJECT_TAG dto) { FromDto(dto); }
 
         #endregion
     }
@@ -169,11 +169,11 @@ namespace Library.Domain
     /// ReadOnly List
     /// </summary>
     [Serializable]
-    public class EntityTag_InfoList : InfoList_Base<EntityTag_InfoList, EntityTag_ListCriteria, EntityTag_InfoItem, EntityTag_ItemCriteria>
+    public class ProjectTag_InfoList : InfoList_Base<ProjectTag_InfoList, ProjectTag_ListCriteria, ProjectTag_InfoItem, ProjectTag_ItemCriteria>
     {
         #region DataPortal
 
-        private void DataPortal_Fetch (EntityTag_ListCriteria aCriteria)
+        private void DataPortal_Fetch (ProjectTag_ListCriteria aCriteria)
         {
             IsReadOnly = false;
             var rlce = RaiseListChangedEvents;
@@ -182,7 +182,7 @@ namespace Library.Domain
             // add select option if given
             if (aCriteria.SelectOption_Value.HasValue)
             {
-                Insert(0, DataPortal.FetchChild<EntityTag_InfoItem>(new D_ENTITY_TAG
+                Insert(0, DataPortal.FetchChild<ProjectTag_InfoItem>(new D_PROJECT_TAG
                 {
                     selectTxt = aCriteria.SelectOption_Text,
                     objectID  = aCriteria.SelectOption_Value.Value
@@ -192,11 +192,11 @@ namespace Library.Domain
             // add elements of list from persistent store
             using (var ctx = DalFactory.GetManager (DalFactory.ARK_ENTITY_SCHEMA_NM))
             {
-                var dal = ctx.GetProvider<I_ENTITY_TAG>();
+                var dal = ctx.GetProvider<I_PROJECT_TAG>();
                 var list = dal.SelectList(aCriteria.ToDto());
 
                 foreach (var item in list)
-                    Add(DataPortal.FetchChild<EntityTag_InfoItem>(item));
+                    Add(DataPortal.FetchChild<ProjectTag_InfoItem>(item));
             }
 
             RaiseListChangedEvents = rlce;
@@ -207,23 +207,23 @@ namespace Library.Domain
     }
 
     [Serializable]
-    public class EntityTag_EditItem : EditItem_Base<EntityTag_EditItem, EntityTag_ItemCriteria>
+    public class ProjectTag_EditItem : EditItem_Base<ProjectTag_EditItem, ProjectTag_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int> EntityID_Property = RegisterProperty<int>(c => c.EntityID);
+        public static readonly PropertyInfo<int> ProjectID_Property = RegisterProperty<int>(c => c.ProjectID);
         [Required]
-        public int EntityID
+        public int ProjectID
         {
-            get { return GetProperty(EntityID_Property); }
-            set { SetProperty(EntityID_Property, value); }
+            get { return GetProperty(ProjectID_Property); }
+            set { SetProperty(ProjectID_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> EntityNm_Property = RegisterProperty<string>(c => c.EntityNm);
-        public string EntityNm
+        public static readonly PropertyInfo<string> ProjectNm_Property = RegisterProperty<string>(c => c.ProjectNm);
+        public string ProjectNm
         {
-            get { return GetProperty(EntityNm_Property); }
-            set { SetProperty(EntityNm_Property, value); }
+            get { return GetProperty(ProjectNm_Property); }
+            set { SetProperty(ProjectNm_Property, value); }
         }
 
         public static readonly PropertyInfo<int> TagID_Property = RegisterProperty<int>(c => c.TagID);
@@ -255,29 +255,29 @@ namespace Library.Domain
             set { SetProperty(TypeTxt_Property, value); }
         }
 
-        public void FromDto (D_ENTITY_TAG dto)
+        public void FromDto (D_PROJECT_TAG dto)
         {
             using (BypassPropertyChecks)
             {
-                EntityID = dto.entityID;
-                TagID  = dto.tagID;
-                TypeID = dto.typeID;
+                ProjectID = dto.projectID;
+                TagID     = dto.tagID;
+                TypeID    = dto.typeID;
 
-                EntityNm = dto.entityNm;
-                TagTxt = dto.tagTxt;
-                TypeTxt = dto.typeTxt;
+                ProjectNm = dto.projectNm;
+                TagTxt    = dto.tagTxt;
+                TypeTxt   = dto.typeTxt;
 
                 base.FromDto (dto);
             }
         }
 
-        public D_ENTITY_TAG ToDto()
+        public D_PROJECT_TAG ToDto()
         {
-            D_ENTITY_TAG dto = new D_ENTITY_TAG();
+            D_PROJECT_TAG dto = new D_PROJECT_TAG();
 
-            dto.entityID = EntityID;
-            dto.tagID    = TagID;
-            dto.typeID   = TypeID;
+            dto.projectID = ProjectID;
+            dto.tagID     = TagID;
+            dto.typeID    = TypeID;
 
             base.ToDto (dto);
 
@@ -294,25 +294,25 @@ namespace Library.Domain
             base.DataPortal_Create();
         }
 
-        private void DataPortal_Fetch(EntityTag_ItemCriteria aKey)
+        private void DataPortal_Fetch(ProjectTag_ItemCriteria aKey)
         {
             using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ENTITY_TAG>();
+                var dal = dalManager.GetProvider<I_PROJECT_TAG>();
                 var data = dal.SelectItem(aKey.ToDto());
 
                 FromDto(data);
             }
         }
 
-        private void Child_Fetch(D_ENTITY_TAG dto) { FromDto(dto); }
+        private void Child_Fetch(D_PROJECT_TAG dto) { FromDto(dto); }
 
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_Insert()
         {
             using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ENTITY_TAG>();
+                var dal = dalManager.GetProvider<I_PROJECT_TAG>();
                 var data = dal.InsertItem(ToDto());
 
                 FromDto(data);
@@ -327,7 +327,7 @@ namespace Library.Domain
                 UpdateOnDts = DateTime.Now;
                 UpdateByUid = AppInfo.UserID;
 
-                var dal = dalManager.GetProvider<I_ENTITY_TAG>();
+                var dal = dalManager.GetProvider<I_PROJECT_TAG>();
                 var data = dal.UpdateItem(ToDto());
 
                 FromDto(data);
@@ -339,9 +339,9 @@ namespace Library.Domain
         {
             using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ENTITY_TAG>();
+                var dal = dalManager.GetProvider<I_PROJECT_TAG>();
 
-                dal.DeleteItem (new K_ENTITY_TAG { objectID = this.ObjectID });
+                dal.DeleteItem (new K_PROJECT_TAG { objectID = this.ObjectID });
             }
         }
 
@@ -368,16 +368,16 @@ namespace Library.Domain
     /// Unit of Work Getter
     /// </summary>
     [Serializable]
-    public class EntityTag_EditItem_Getter : EditItem_Getter_Base<EntityTag_EditItem, EntityTag_ItemCriteria>
+    public class ProjectTag_EditItem_Getter : EditItem_Getter_Base<ProjectTag_EditItem, ProjectTag_ItemCriteria>
     {
         #region DataPortal
 
-        protected override void DataPortal_Fetch(EntityTag_ItemCriteria aCriteria)
+        protected override void DataPortal_Fetch(ProjectTag_ItemCriteria aCriteria)
         {
             if (aCriteria.HasKey)
-                EditItem = EntityTag_EditItem.GetItem(aCriteria);
+                EditItem = ProjectTag_EditItem.GetItem(aCriteria);
             else
-                EditItem = EntityTag_EditItem.NewItem(aCriteria);
+                EditItem = ProjectTag_EditItem.NewItem(aCriteria);
         }
 
         #endregion
@@ -387,22 +387,22 @@ namespace Library.Domain
     /// Editable List
     /// </summary>
     [Serializable]
-    public class EntityTag_EditList : EditList_Base<EntityTag_EditList, EntityTag_ListCriteria, EntityTag_EditItem, EntityTag_ItemCriteria>
+    public class ProjectTag_EditList : EditList_Base<ProjectTag_EditList, ProjectTag_ListCriteria, ProjectTag_EditItem, ProjectTag_ItemCriteria>
     {
         #region DataPortal
 
-        private void DataPortal_Fetch(EntityTag_ListCriteria aCriteria)
+        private void DataPortal_Fetch(ProjectTag_ListCriteria aCriteria)
         {
             var rlce = RaiseListChangedEvents;
             RaiseListChangedEvents = false;
 
             using (var ctx = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
             {
-                var dal = ctx.GetProvider<I_ENTITY_TAG>();
+                var dal = ctx.GetProvider<I_PROJECT_TAG>();
                 var list = dal.SelectList(aCriteria.ToDto());
 
                 foreach (var item in list)
-                    Add(DataPortal.FetchChild<EntityTag_EditItem>(item));
+                    Add(DataPortal.FetchChild<ProjectTag_EditItem>(item));
             }
 
             RaiseListChangedEvents = rlce;
