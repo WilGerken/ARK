@@ -29,23 +29,44 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ArkWeb</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-left">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profiles <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a asp-area="" asp-controller="Story" asp-action="ArkStory_List">Stories</a></li>
-                            <li><a asp-area="" asp-controller="Project" asp-action="ArkProject_List">Projects</a></li>
-                            <li><a asp-area="" asp-controller="Entity" asp-action="ArkEntity_List">Profiles</a></li>
+                            <li><a asp-area="" asp-controller="Entity" asp-action="ArkEntity_List">Profile List</a></li>
                             <li class="divider" />
                             <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">References</a></li>
                             <li><a asp-area="" asp-controller="Entity" asp-action="EntityContact_List">Contacts</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stories <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Story" asp-action="ArkStory_List">Story List</a></li>
+                            <li><a asp-area="" asp-controller="Story" asp-action="ArkStory_List">Blog List</a></li>
                             <li class="divider" />
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">Sources</a></li>
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">Issues</a></li>
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">Threads</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="Project" asp-action="ArkProject_List">Project List</a></li>
+                            <li class="divider" />
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">Resources</a></li>
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">Tasks</a></li>
+                            <li><a asp-area="" asp-controller="Entity" asp-action="EntityReference_List">Risks</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Common <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
                             <li><a asp-area="" asp-controller="Common" asp-action="ArkTag_List">Tags</a></li>
                             <li><a asp-area="" asp-controller="Common" asp-action="Location_List">Locations</a></li>
                         </ul>
                     </li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -55,7 +76,15 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - ArkWeb</p>
+            <div class="col-sm-5 text-left">
+                <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+            </div>
+            <div class="col-sm-2 text-center">
+                &copy; 2018 - ArkWeb
+            </div>
+            <div class="col-sm-5 text-right">
+                <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+            </div>
         </footer>
     </div>
 

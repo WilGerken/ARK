@@ -200,6 +200,30 @@ namespace Library.Domain
             return dto;
         }
 
+        public static readonly PropertyInfo<StoryEntity_EditList> StoryEntityList_Property =
+            RegisterProperty<StoryEntity_EditList>(p => p.StoryEntityList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public StoryEntity_EditList StoryEntityList
+        {
+            get
+            {
+                return LazyGetProperty(StoryEntityList_Property,
+                    () => DataPortal.Fetch<StoryEntity_EditList>(new StoryEntity_ListCriteria { EntityID = ReadProperty (ObjectID_Property) }));
+            }
+            private set { LoadProperty(StoryEntityList_Property, value); }
+        }
+
+        public static readonly PropertyInfo<ProjectResource_EditList> ProjectResourceList_Property =
+            RegisterProperty<ProjectResource_EditList>(p => p.ProjectResourceList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public ProjectResource_EditList ProjectResourceList
+        {
+            get
+            {
+                return LazyGetProperty (ProjectResourceList_Property,
+                    () => DataPortal.Fetch<ProjectResource_EditList>(new ProjectResource_ListCriteria { EntityID = ReadProperty (ObjectID_Property) }));
+            }
+            private set { LoadProperty (ProjectResourceList_Property, value); }
+        }
+
         public static readonly PropertyInfo<EntityTag_EditList> EntityTagList_Property =
             RegisterProperty<EntityTag_EditList>(p => p.EntityTagList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
         public EntityTag_EditList EntityTagList
@@ -259,6 +283,18 @@ namespace Library.Domain
                 var data = dal.UpdateItem(ToDto());
 
                 FromDto(data);
+            }
+        }
+
+        private void Child_Update ()
+        {
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            {
+                var dal = dalManager.GetProvider<I_ARK_ENTITY>();
+                using (BypassPropertyChecks)
+                {
+                    dal.UpdateItem (ToDto());
+                }
             }
         }
 

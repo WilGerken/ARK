@@ -295,6 +295,42 @@ namespace Library.Domain
             return dto;
         }
 
+        public static readonly PropertyInfo<StoryTag_EditList> StoryTagList_Property =
+            RegisterProperty<StoryTag_EditList>(p => p.StoryTagList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public StoryTag_EditList StoryTagList
+        {
+            get
+            {
+                return LazyGetProperty(StoryTagList_Property,
+                    () => DataPortal.Fetch<StoryTag_EditList>(new StoryTag_ListCriteria { StoryID = ReadProperty(ObjectID_Property) }));
+            }
+            private set { LoadProperty(StoryTagList_Property, value); }
+        }
+
+        public static readonly PropertyInfo<StoryEntity_EditList> StoryEntityList_Property =
+            RegisterProperty<StoryEntity_EditList>(p => p.StoryEntityList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public StoryEntity_EditList StoryEntityList
+        {
+            get
+            {
+                return LazyGetProperty(StoryEntityList_Property,
+                    () => DataPortal.Fetch<StoryEntity_EditList>(new StoryEntity_ListCriteria { StoryID = ReadProperty(ObjectID_Property) }));
+            }
+            private set { LoadProperty(StoryEntityList_Property, value); }
+        }
+
+        public static readonly PropertyInfo<ProjectStory_EditList> ProjectStoryList_Property =
+            RegisterProperty<ProjectStory_EditList>(p => p.ProjectStoryList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public ProjectStory_EditList ProjectStoryList
+        {
+            get
+            {
+                return LazyGetProperty(ProjectStoryList_Property,
+                    () => DataPortal.Fetch<ProjectStory_EditList>(new ProjectStory_ListCriteria { StoryID = ReadProperty(ObjectID_Property) }));
+            }
+            private set { LoadProperty(ProjectStoryList_Property, value); }
+        }
+
         #endregion
 
         #region DataPortal

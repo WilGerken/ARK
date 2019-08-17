@@ -2,56 +2,56 @@
 using System.Collections.Generic;
 using Library.Common;
 
-namespace Library.Resources.Entity
+namespace Library.Resources.Story
 {
     /// <summary>
-    /// public interface for EntityStory items
+    /// public interface for StoryEntity items
     /// </summary>
-    public interface I_ENTITY_STORY
+    public interface I_STORY_ENTITY
     {
-        List<D_ENTITY_STORY> SelectList (F_ENTITY_STORY aFilter);
-        void                 DeleteList (F_ENTITY_STORY aFilter);
+        List<D_STORY_ENTITY> SelectList (F_STORY_ENTITY aFilter);
+        void                 DeleteList (F_STORY_ENTITY aFilter);
 
-        D_ENTITY_STORY SelectItem (K_ENTITY_STORY aKey);
-        D_ENTITY_STORY InsertItem (D_ENTITY_STORY aDto);
-        D_ENTITY_STORY UpdateItem (D_ENTITY_STORY aDto);
-        void           DeleteItem (K_ENTITY_STORY aKey);
+        D_STORY_ENTITY SelectItem (K_STORY_ENTITY aKey);
+        D_STORY_ENTITY InsertItem (D_STORY_ENTITY aDto);
+        D_STORY_ENTITY UpdateItem (D_STORY_ENTITY aDto);
+        void           DeleteItem (K_STORY_ENTITY aKey);
     }
 
     /// <summary>
     /// filter object for WorldMap lists
     /// </summary>
-    public class F_ENTITY_STORY : Data_F_Base
+    public class F_STORY_ENTITY : Data_F_Base
     {
-        public int?   entityID { get; set; }
         public int?   storyID  { get; set; }
+        public int?   entityID { get; set; }
         public int?   roleID   { get; set; }
 
         /// <summary>
         /// default constructor
         /// </summary>
-        public F_ENTITY_STORY () { }
+        public F_STORY_ENTITY () { }
     }
 
     /// <summary>
     /// key object for WorldMap items
     /// </summary>
-    public class K_ENTITY_STORY : Data_K_Base
+    public class K_STORY_ENTITY : Data_K_Base
     {
-        public int? entityID { get; set; }
         public int? storyID  { get; set; }
+        public int? entityID { get; set; }
         public int? roleID   { get; set; }
     }
 
     /// <summary>
     /// data object for WorldMap items
     /// </summary>
-    public class D_ENTITY_STORY : Data_O_Base
+    public class D_STORY_ENTITY : Data_O_Base
     {
-        public int    entityID { get; set; }
-        public string entityNm { get; set; }
         public int    storyID  { get; set; }
         public string titleTxt { get; set; }
+        public int    entityID { get; set; }
+        public string entityNm { get; set; }
         public int?   roleID   { get; set; }
         public string roleTxt  { get; set; }
         public string descTxt  { get; set; }
@@ -59,6 +59,6 @@ namespace Library.Resources.Entity
         /// <summary>
         /// default constructo
         /// </summary>
-        public D_ENTITY_STORY () : base () { }
+        public D_STORY_ENTITY () : base () { }
     }
 }

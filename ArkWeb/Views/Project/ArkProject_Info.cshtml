@@ -31,7 +31,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-4">
         @Html.LabelFor(x => x.ModelObject.CreateByNm, "Created By:")
         @Html.DisplayFor(x => x.ModelObject.CreateByNm, new { htmlAttributes = new { @class = "form-control" } })
     </div>
@@ -39,9 +39,13 @@
         @Html.LabelFor(x => x.ModelObject.CreateOnDts, "Created On:")
         @Html.DisplayFor(x => x.ModelObject.CreateOnDts, new { htmlAttributes = new { @class = "form-control" } })
     </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(x => x.ModelObject.ActiveYn, "Is Active:")
+        @Html.DisplayFor(x => x.ModelObject.ActiveYn, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
 </div>
 <div class="row">
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-4">
         @Html.LabelFor(x => x.ModelObject.UpdateByNm, "Updated By:")
         @Html.DisplayFor(x => x.ModelObject.UpdateByNm, new { htmlAttributes = new { @class = "form-control" } })
     </div>
@@ -49,13 +53,66 @@
         @Html.LabelFor(x => x.ModelObject.UpdateOnDts, "Updated On:")
         @Html.DisplayFor(x => x.ModelObject.UpdateOnDts, new { htmlAttributes = new { @class = "form-control" } })
     </div>
-    <div class="form-group col-md-3">
-        @Html.LabelFor(x => x.ModelObject.ActiveYn, "Is Active:")
-        @Html.DisplayFor(x => x.ModelObject.ActiveYn, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="col-md-4 text-left">
+        @Html.ActionLink("Edit", "ArkProject_Edit", "Project", new { id = Model.ModelObject.ObjectID })
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12 text-center">
-        @Html.ActionLink("Edit", "ArkProject_Edit", "Project", new { id = Model.ModelObject.ObjectID })
+<hr />
+<div id="exTab1" class="container">
+    <ul class="nav nav-pills">
+        <li>
+            <a href="#1a" data-toggle="tab">Resources</a>
+        </li>
+        <li class="active">
+            <a href="#2a" data-toggle="tab">Tags</a>
+        </li>
+        <li>
+            <a href="#3a" data-toggle="tab">Risks</a>
+        </li>
+    </ul>
+
+    <div class="tab-content clearfix" style="padding-top: 20px">
+        <div class="tab-pane" id="1a">
+            <div class="row" style="font-weight:700">
+                <div class="col-md-3">Project</div>
+                <div class="col-md-9">Description</div>
+            </div>
+
+            @foreach (var item in Model.ModelObject.ProjectResourceList)
+            {
+                <div class="row">
+                    <div class="col-md-3">@Html.DisplayFor(x => item.ProjectNm)</div>
+                    <div class="col-md-9">@Html.DisplayFor(x => item.DescTxt)</div>
+                </div>
+            }
+        </div>
+        <div class="tab-pane active" id="2a">
+            <div class="row" style="font-weight:700">
+                <div class="col-md-3">Tag</div>
+                <div class="col-md-3">Type</div>
+            </div>
+
+            @foreach (var item in Model.ModelObject.ProjectTagList)
+            {
+                <div class="row">
+                    <div class="col-md-3">@Html.DisplayFor(x => item.TagTxt)</div>
+                    <div class="col-md-3">@Html.DisplayFor(x => item.TypeTxt)</div>
+                </div>
+            }
+        </div>
+        <div class="tab-pane" id="3a">
+            <div class="row" style="font-weight:700">
+                <div class="col-md-3">Risk</div>
+                <div class="col-md-3">Type</div>
+            </div>
+
+            @foreach (var item in Model.ModelObject.ProjectRiskList)
+            {
+                <div class="row">
+                    <div class="col-md-3">@Html.DisplayFor(x => item.TitleTxt)</div>
+                    <div class="col-md-3">@Html.DisplayFor(x => item.TypeTxt)</div>
+                </div>
+            }
+        </div>
     </div>
 </div>

@@ -4,25 +4,26 @@ using System.Data;
 using System.Linq;
 using Library.Common;
 using Library.Resources.Common.memory;
+using Library.Resources.Entity.memory;
 
-namespace Library.Resources.Entity.memory
+namespace Library.Resources.Project.memory
 {
     /// <summary>
     /// data access class
     /// </summary>
-    public class ENTITY_STORY_ROLE_TYPE : DATA_ACCESS_BASE<D_ENTITY_STORY_ROLE_TYPE, F_ENTITY_STORY_ROLE_TYPE, K_ENTITY_STORY_ROLE_TYPE>, I_ENTITY_STORY_ROLE_TYPE
+    public class PROJECT_RISK_TYPE : DATA_ACCESS_BASE<D_PROJECT_RISK_TYPE, F_PROJECT_RISK_TYPE, K_PROJECT_RISK_TYPE>, I_PROJECT_RISK_TYPE
     {
         // resource list
-        public static List<D_ENTITY_STORY_ROLE_TYPE> ResourceList = new List<D_ENTITY_STORY_ROLE_TYPE>();
+        public static List<D_PROJECT_RISK_TYPE> ResourceList = new List<D_PROJECT_RISK_TYPE>();
 
-        static ENTITY_STORY_ROLE_TYPE ()
+        static PROJECT_RISK_TYPE ()
         {
             int lID = Ref.AdminID;
 
-            //ResourceList.Add(new D_ENTITY_STORY_ROLE_TYPE { objectID = lID++, entityID = 1, tagID = 1, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add(new D_ENTITY_STORY_ROLE_TYPE { objectID = lID++, entityID = 1, tagID = 1, typeID = 2, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add(new D_ENTITY_STORY_ROLE_TYPE { objectID = lID++, entityID = 1, tagID = 2, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add(new D_ENTITY_STORY_ROLE_TYPE { objectID = lID++, entityID = 1, tagID = 3, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add(new D_PROJECT_RISK_TYPE { objectID = lID++, entityID = 1, tagID = 1, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add(new D_PROJECT_RISK_TYPE { objectID = lID++, entityID = 1, tagID = 1, typeID = 2, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add(new D_PROJECT_RISK_TYPE { objectID = lID++, entityID = 1, tagID = 2, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add(new D_PROJECT_RISK_TYPE { objectID = lID++, entityID = 1, tagID = 3, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
         }
 
         /// <summary>
@@ -30,12 +31,12 @@ namespace Library.Resources.Entity.memory
         /// </summary>
         /// <param name="aFilter"></param>
         /// <returns></returns>
-        public List<D_ENTITY_STORY_ROLE_TYPE> SelectList (F_ENTITY_STORY_ROLE_TYPE aFilter)
+        public List<D_PROJECT_RISK_TYPE> SelectList (F_PROJECT_RISK_TYPE aFilter)
         {
             var lResult = (from item in ResourceList
                            from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
                            from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
-                           select new D_ENTITY_STORY_ROLE_TYPE
+                           select new D_PROJECT_RISK_TYPE
                            {
                                objectID = item.objectID,
                                typeTxt  = item.typeTxt,
@@ -61,16 +62,16 @@ namespace Library.Resources.Entity.memory
             lResult = CheckBaseCriteria (lResult, aFilter);
 
             // return result
-            return lResult.ToList<D_ENTITY_STORY_ROLE_TYPE>();
+            return lResult.ToList<D_PROJECT_RISK_TYPE>();
         }
 
         /// <summary>
         /// remove all matching items from persistent store
         /// </summary>
         /// <param name="aFilter"></param>
-        public void DeleteList (F_ENTITY_STORY_ROLE_TYPE aFilter)
+        public void DeleteList (F_PROJECT_RISK_TYPE aFilter)
         {
-            throw new NotImplementedException ("ENTITY_STORY_ROLE_TYPE.DeleteList not implemented");
+            throw new NotImplementedException ("PROJECT_RISK_TYPE.DeleteList not implemented");
         }
 
         /// <summary>
@@ -78,27 +79,27 @@ namespace Library.Resources.Entity.memory
         /// </summary>
         /// <param name="aKey"></param>
         /// <returns></returns>
-        public D_ENTITY_STORY_ROLE_TYPE SelectItem (K_ENTITY_STORY_ROLE_TYPE aKey)
+        public D_PROJECT_RISK_TYPE SelectItem (K_PROJECT_RISK_TYPE aKey)
         {
-            D_ENTITY_STORY_ROLE_TYPE lResult = null;
+            D_PROJECT_RISK_TYPE lResult = null;
 
             var lQuery = (from item in ResourceList
                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
-                          select new D_ENTITY_STORY_ROLE_TYPE
+                          select new D_PROJECT_RISK_TYPE
                           {
                               objectID = item.objectID,
-                              typeTxt = item.typeTxt,
-                              descTxt = item.descTxt,
+                              typeTxt  = item.typeTxt,
+                              descTxt  = item.descTxt,
 
-                              activeYn = item.activeYn,
+                              activeYn    = item.activeYn,
                               createByUid = item.createByUid,
-                              createByNm = createItem != null ? createItem.entityNm : string.Empty,
+                              createByNm  = createItem != null ? createItem.entityNm : string.Empty,
                               createOnDts = item.createOnDts,
                               updateByUid = item.updateByUid,
-                              updateByNm = updateItem != null ? updateItem.entityNm : string.Empty,
+                              updateByNm  = updateItem != null ? updateItem.entityNm : string.Empty,
                               updateOnDts = item.updateOnDts,
-                              versionKey = item.versionKey
+                              versionKey  = item.versionKey
                           });
 
             // apply key attributes
@@ -107,7 +108,7 @@ namespace Library.Resources.Entity.memory
 
             // throw exception if not found
             if (lResult == null)
-                throw new DllNotFoundException (string.Format ("ENTITY_STORY_ROLE_TYPE Item not found for key {0}", aKey.objectID));
+                throw new DllNotFoundException (string.Format ("PROJECT_RISK_TYPE Item not found for key {0}", aKey.objectID));
 
             // return result
             return lResult;
@@ -117,7 +118,7 @@ namespace Library.Resources.Entity.memory
         /// insert an item into persistent store
         /// </summary>
         /// <param name="aDto"></param>
-        public D_ENTITY_STORY_ROLE_TYPE InsertItem (D_ENTITY_STORY_ROLE_TYPE aDto)
+        public D_PROJECT_RISK_TYPE InsertItem (D_PROJECT_RISK_TYPE aDto)
         {
             int lID = 0;
 
@@ -125,7 +126,7 @@ namespace Library.Resources.Entity.memory
                 lID = ResourceList.Select (x => x.objectID).Max() + 1;
 
             // create new item
-            D_ENTITY_STORY_ROLE_TYPE lItem = new D_ENTITY_STORY_ROLE_TYPE
+            D_PROJECT_RISK_TYPE lItem = new D_PROJECT_RISK_TYPE
             {
                 objectID = lID,
                 typeTxt  = aDto.typeTxt,
@@ -151,10 +152,10 @@ namespace Library.Resources.Entity.memory
         /// update an item in persistent store
         /// </summary>
         /// <param name="aDto"></param>
-        public D_ENTITY_STORY_ROLE_TYPE UpdateItem (D_ENTITY_STORY_ROLE_TYPE aDto)
+        public D_PROJECT_RISK_TYPE UpdateItem (D_PROJECT_RISK_TYPE aDto)
         {
             // fetch indicated item
-            D_ENTITY_STORY_ROLE_TYPE lItem = ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
+            D_PROJECT_RISK_TYPE lItem = ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
 
             // update item
             lock (lItem)
@@ -176,10 +177,10 @@ namespace Library.Resources.Entity.memory
         /// remove an item from persistent store
         /// </summary>
         /// <param name="aKey"></param>
-        public void DeleteItem (K_ENTITY_STORY_ROLE_TYPE aKey)
+        public void DeleteItem (K_PROJECT_RISK_TYPE aKey)
         {
             // fetch indicated item
-            D_ENTITY_STORY_ROLE_TYPE lItem = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+            D_PROJECT_RISK_TYPE lItem = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // delete item from list
             lock (ResourceList)

@@ -5,26 +5,25 @@ using System.Linq;
 using Library.Common;
 using Library.Resources.Common.memory;
 using Library.Resources.Entity.memory;
-using Library.Resources.Story.memory;
 
-namespace Library.Resources.Project.memory
+namespace Library.Resources.Story.memory
 {
     /// <summary>
     /// data access class
     /// </summary>
-    public class PROJECT_STORY : DATA_ACCESS_BASE<D_PROJECT_STORY, F_PROJECT_STORY, K_PROJECT_STORY>, I_PROJECT_STORY
+    public class STORY_ENTITY : DATA_ACCESS_BASE<D_STORY_ENTITY, F_STORY_ENTITY, K_STORY_ENTITY>, I_STORY_ENTITY
     {
         // resource list
-        public static List<D_PROJECT_STORY> ResourceList = new List<D_PROJECT_STORY>();
+        public static List<D_STORY_ENTITY> ResourceList = new List<D_STORY_ENTITY>();
 
-        static PROJECT_STORY ()
+        static STORY_ENTITY ()
         {
             int lID = Ref.AdminID;
 
-            //ResourceList.Add (new D_PROJECT_STORY { objectID = lID++, entityID = 1, tagID = 1, roleID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_PROJECT_STORY { objectID = lID++, entityID = 1, tagID = 1, roleID = 2, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_PROJECT_STORY { objectID = lID++, entityID = 1, tagID = 2, roleID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
-            //ResourceList.Add (new D_PROJECT_STORY { objectID = lID++, entityID = 1, tagID = 3, roleID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add (new D_STORY_ENTITY { objectID = lID++, entityID = 1, tagID = 1, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add (new D_STORY_ENTITY { objectID = lID++, entityID = 1, tagID = 1, typeID = 2, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add (new D_STORY_ENTITY { objectID = lID++, entityID = 1, tagID = 2, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
+            //ResourceList.Add (new D_STORY_ENTITY { objectID = lID++, entityID = 1, tagID = 3, typeID = 1, createByUid = Ref.AdminID, updateByUid = Ref.AdminID });
         }
 
         /// <summary>
@@ -32,24 +31,24 @@ namespace Library.Resources.Project.memory
         /// </summary>
         /// <param name="aFilter"></param>
         /// <returns></returns>
-        public List<D_PROJECT_STORY> SelectList (F_PROJECT_STORY aFilter)
+        public List<D_STORY_ENTITY> SelectList (F_STORY_ENTITY aFilter)
         {
             var lResult = (from item in ResourceList
-                           join entityItem in ARK_PROJECT.ResourceList on item.projectID equals entityItem.objectID
-                           join storyItem  in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
-                           from roleItem   in PROJECT_STORY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.roleID).DefaultIfEmpty()
+                           join entityItem in ARK_ENTITY.ResourceList on item.entityID equals entityItem.objectID
+                           join storyItem in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
+                           from roleItem in STORY_ENTITY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.roleID).DefaultIfEmpty()
                            from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
                            from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
-                           select new D_PROJECT_STORY
+                           select new D_STORY_ENTITY
                            {
-                               objectID  = item.objectID,
-                               projectID = item.projectID,
-                               projectNm = item.projectNm,
-                               storyID   = item.storyID,
-                               titleTxt  = storyItem.titleTxt,
-                               roleID    = item.roleID,
-                               roleTxt   = roleItem.typeTxt,
-                               descTxt   = item.descTxt,
+                               objectID = item.objectID,
+                               storyID = item.storyID,
+                               titleTxt = storyItem.titleTxt,
+                               entityID = item.entityID,
+                               entityNm = item.entityNm,
+                               roleID = item.roleID,
+                               roleTxt = roleItem.typeTxt,
+                               descTxt = item.descTxt,
 
                                activeYn = item.activeYn,
                                createByUid = item.createByUid,
@@ -62,9 +61,9 @@ namespace Library.Resources.Project.memory
                            });
 
             // apply filter attributes
-            if (aFilter.projectID.HasValue)
+            if (aFilter.entityID.HasValue)
             {
-                lResult = lResult.Where (x => x.projectID == aFilter.projectID.Value);
+                lResult = lResult.Where (x => x.entityID == aFilter.entityID.Value);
             }
 
             if (aFilter.storyID.HasValue)
@@ -81,16 +80,16 @@ namespace Library.Resources.Project.memory
             lResult = CheckBaseCriteria (lResult, aFilter);
 
             // return result
-            return lResult.ToList<D_PROJECT_STORY>();
+            return lResult.ToList<D_STORY_ENTITY>();
         }
 
         /// <summary>
         /// remove all matching items from persistent store
         /// </summary>
         /// <param name="aFilter"></param>
-        public void DeleteList (F_PROJECT_STORY aFilter)
+        public void DeleteList (F_STORY_ENTITY aFilter)
         {
-            throw new NotImplementedException ("PROJECT_STORY.DeleteList not implemented");
+            throw new NotImplementedException ("STORY_ENTITY.DeleteList not implemented");
         }
 
         /// <summary>
@@ -98,23 +97,23 @@ namespace Library.Resources.Project.memory
         /// </summary>
         /// <param name="aKey"></param>
         /// <returns></returns>
-        public D_PROJECT_STORY SelectItem (K_PROJECT_STORY aKey)
+        public D_STORY_ENTITY SelectItem (K_STORY_ENTITY aKey)
         {
-            D_PROJECT_STORY lResult = null;
+            D_STORY_ENTITY lResult = null;
 
             var lQuery = (from item in ResourceList
-                          join entityItem in ARK_PROJECT.ResourceList on item.projectID equals entityItem.objectID
+                          join entityItem in ARK_ENTITY.ResourceList on item.entityID equals entityItem.objectID
                           join storyItem  in ARK_STORY.ResourceList on item.storyID equals storyItem.objectID
-                          from roleItem   in PROJECT_STORY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.roleID).DefaultIfEmpty()
+                          from roleItem   in STORY_ENTITY_ROLE_TYPE.ResourceList.Where(x => x.objectID == item.roleID).DefaultIfEmpty()
                           from createItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.createByUid).DefaultIfEmpty()
                           from updateItem in ARK_ENTITY.ResourceList.Where(x => x.objectID == item.updateByUid).DefaultIfEmpty()
-                          select new D_PROJECT_STORY
+                          select new D_STORY_ENTITY
                           {
                               objectID = item.objectID,
-                              projectID = item.projectID,
-                              projectNm = item.projectNm,
                               storyID = item.storyID,
                               titleTxt = storyItem.titleTxt,
+                              entityID = item.entityID,
+                              entityNm = item.entityNm,
                               roleID = item.roleID,
                               roleTxt = roleItem.typeTxt,
                               descTxt = item.descTxt,
@@ -135,7 +134,7 @@ namespace Library.Resources.Project.memory
 
             // throw exception if not found
             if (lResult == null)
-                throw new DllNotFoundException (string.Format ("PROJECT_STORY Item not found for key {0}", aKey.objectID));
+                throw new DllNotFoundException (string.Format ("STORY_ENTITY Item not found for key {0}", aKey.objectID));
 
             // return result
             return lResult;
@@ -145,7 +144,7 @@ namespace Library.Resources.Project.memory
         /// insert an item into persistent store
         /// </summary>
         /// <param name="aDto"></param>
-        public D_PROJECT_STORY InsertItem (D_PROJECT_STORY aDto)
+        public D_STORY_ENTITY InsertItem (D_STORY_ENTITY aDto)
         {
             int lID = 0;
 
@@ -153,13 +152,13 @@ namespace Library.Resources.Project.memory
                 lID = ResourceList.Select (x => x.objectID).Max() + 1;
 
             // create new item
-            D_PROJECT_STORY lItem = new D_PROJECT_STORY
+            D_STORY_ENTITY lItem = new D_STORY_ENTITY
             {
-                objectID  = lID,
-                projectID = aDto.projectID,
-                storyID   = aDto.storyID,
-                roleID    = aDto.roleID,
-                descTxt   = aDto.descTxt,
+                objectID = lID,
+                storyID  = aDto.storyID,
+                entityID = aDto.entityID,
+                roleID   = aDto.roleID,
+                descTxt  = aDto.descTxt,
 
                 activeYn    = aDto.activeYn,
                 createByUid = aDto.createByUid,
@@ -181,18 +180,18 @@ namespace Library.Resources.Project.memory
         /// update an item in persistent store
         /// </summary>
         /// <param name="aDto"></param>
-        public D_PROJECT_STORY UpdateItem (D_PROJECT_STORY aDto)
+        public D_STORY_ENTITY UpdateItem (D_STORY_ENTITY aDto)
         {
             // fetch indicated item
-            D_PROJECT_STORY lItem = ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
+            D_STORY_ENTITY lItem = ResourceList.Where (x => x.objectID == aDto.objectID).FirstOrDefault();
 
             // update item
             lock (lItem)
             {
-                lItem.projectID = aDto.projectID;
-                lItem.storyID   = aDto.storyID;
-                lItem.roleID    = aDto.roleID;
-                lItem.descTxt   = aDto.descTxt;
+                lItem.storyID  = aDto.storyID;
+                lItem.entityID = aDto.entityID;
+                lItem.roleID   = aDto.roleID;
+                lItem.descTxt  = aDto.descTxt;
 
                 lItem.activeYn    = aDto.activeYn;
                 lItem.createByUid = aDto.createByUid;
@@ -208,10 +207,10 @@ namespace Library.Resources.Project.memory
         /// remove an item from persistent store
         /// </summary>
         /// <param name="aKey"></param>
-        public void DeleteItem (K_PROJECT_STORY aKey)
+        public void DeleteItem (K_STORY_ENTITY aKey)
         {
             // fetch indicated item
-            D_PROJECT_STORY lItem = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
+            D_STORY_ENTITY lItem = ResourceList.Where (x => x.objectID == aKey.objectID).FirstOrDefault();
 
             // delete item from list
             lock (ResourceList)

@@ -38,31 +38,29 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-3">
-            @Html.LabelFor(x => x.ModelObject.CreateByUid, "Created By:")
-            @Html.DisplayFor(x => x.ModelObject.CreateByUid, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="form-group col-md-4">
+            @Html.LabelFor(x => x.ModelObject.CreateByNm, "Created By:")
+            @Html.DisplayFor(x => x.ModelObject.CreateByNm, new { htmlAttributes = new { @class = "form-control" } })
         </div>
         <div class="form-group col-md-4">
             @Html.LabelFor(x => x.ModelObject.CreateOnDts, "Created On:")
             @Html.DisplayFor(x => x.ModelObject.CreateOnDts, new { htmlAttributes = new { @class = "form-control" } })
         </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(x => x.ModelObject.ActiveYn, "Is Active:")
+            @Html.DisplayFor(x => x.ModelObject.ActiveYn, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-3">
-            @Html.LabelFor(x => x.ModelObject.UpdateByUid, "Updated By:")
-            @Html.DisplayFor(x => x.ModelObject.UpdateByUid, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="form-group col-md-4">
+            @Html.LabelFor(x => x.ModelObject.UpdateByNm, "Updated By:")
+            @Html.DisplayFor(x => x.ModelObject.UpdateByNm, new { htmlAttributes = new { @class = "form-control" } })
         </div>
         <div class="form-group col-md-4">
             @Html.LabelFor(x => x.ModelObject.UpdateOnDts, "Updated On:")
             @Html.DisplayFor(x => x.ModelObject.UpdateOnDts, new { htmlAttributes = new { @class = "form-control" } })
         </div>
-        <div class="form-group col-md-3">
-            @Html.LabelFor(x => x.ModelObject.ActiveYn, "Is Active:")
-            @Html.EditorFor(x => x.ModelObject.ActiveYn, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="col-md-4 text-left">
             <input type="submit" value="Save" class="btn btn-default" />
             @Html.ActionLink("Cancel", "ArkStory_Info", "Story", new { id = Model.ModelObject.ObjectID })
         </div>

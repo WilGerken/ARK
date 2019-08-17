@@ -285,6 +285,42 @@ namespace Library.Domain
             return dto;
         }
 
+        public static readonly PropertyInfo<ProjectResource_EditList> ProjectResourceList_Property =
+            RegisterProperty<ProjectResource_EditList>(p => p.ProjectResourceList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public ProjectResource_EditList ProjectResourceList
+        {
+            get
+            {
+                return LazyGetProperty(ProjectResourceList_Property,
+                    () => DataPortal.Fetch<ProjectResource_EditList>(new ProjectResource_ListCriteria { ProjectID = ReadProperty(ObjectID_Property) }));
+            }
+            private set { LoadProperty(ProjectResourceList_Property, value); }
+        }
+
+        public static readonly PropertyInfo<ProjectRisk_EditList> ProjectRiskList_Property =
+            RegisterProperty<ProjectRisk_EditList>(p => p.ProjectRiskList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public ProjectRisk_EditList ProjectRiskList
+        {
+            get
+            {
+                return LazyGetProperty(ProjectRiskList_Property,
+                    () => DataPortal.Fetch<ProjectRisk_EditList>(new ProjectRisk_ListCriteria { ProjectID = ReadProperty (ObjectID_Property) }));
+            }
+            private set { LoadProperty(ProjectRiskList_Property, value); }
+        }
+
+        public static readonly PropertyInfo<ProjectTag_EditList> ProjectTagList_Property =
+            RegisterProperty<ProjectTag_EditList>(p => p.ProjectTagList, RelationshipTypes.Child | RelationshipTypes.LazyLoad);
+        public ProjectTag_EditList ProjectTagList
+        {
+            get
+            {
+                return LazyGetProperty(ProjectTagList_Property,
+                    () => DataPortal.Fetch<ProjectTag_EditList>(new ProjectTag_ListCriteria { ProjectID = ReadProperty(ObjectID_Property) }));
+            }
+            private set { LoadProperty(ProjectTagList_Property, value); }
+        }
+
         #endregion
 
         #region DataPortal

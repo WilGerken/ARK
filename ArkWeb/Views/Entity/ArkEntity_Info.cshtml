@@ -24,31 +24,29 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-3">
-            @Html.LabelFor(x => x.ModelObject.CreateByUid, "Created By:")
-            @Html.DisplayFor(x => x.ModelObject.CreateByUid, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="form-group col-md-4">
+            @Html.LabelFor(x => x.ModelObject.CreateByNm, "Created By:")
+            @Html.DisplayFor(x => x.ModelObject.CreateByNm, new { htmlAttributes = new { @class = "form-control" } })
         </div>
         <div class="form-group col-md-4">
             @Html.LabelFor(x => x.ModelObject.CreateOnDts, "Created On:")
             @Html.DisplayFor(x => x.ModelObject.CreateOnDts, new { htmlAttributes = new { @class = "form-control" } })
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-3">
-            @Html.LabelFor(x => x.ModelObject.UpdateByUid, "Updated By:")
-            @Html.DisplayFor(x => x.ModelObject.UpdateByUid, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
         <div class="form-group col-md-4">
-            @Html.LabelFor(x => x.ModelObject.UpdateOnDts, "Updated On:")
-            @Html.DisplayFor(x => x.ModelObject.UpdateOnDts, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-        <div class="form-group col-md-3">
             @Html.LabelFor(x => x.ModelObject.ActiveYn, "Is Active:")
             @Html.DisplayFor(x => x.ModelObject.ActiveYn, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(x => x.ModelObject.UpdateByNm, "Updated By:")
+            @Html.DisplayFor(x => x.ModelObject.UpdateByNm, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(x => x.ModelObject.UpdateOnDts, "Updated On:")
+            @Html.DisplayFor(x => x.ModelObject.UpdateOnDts, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="col-md-4 text-left">
             @Html.ActionLink("Edit", "ArkEntity_Edit", "Entity", new { id = Model.ModelObject.ObjectID })
         </div>
     </div>
@@ -57,36 +55,70 @@
 <hr />
 <div id="exTab1" class="container">
     <ul class="nav nav-pills">
+        <li>
+            <a href="#1a" data-toggle="tab">Stories</a>
+        </li>
+        <li>
+            <a href="#2a" data-toggle="tab">Projects</a>
+        </li>
         <li class="active">
-            <a href="#1a" data-toggle="tab">Tags</a>
+            <a href="#3a" data-toggle="tab">Tags</a>
         </li>
         <li>
-            <a href="#2a" data-toggle="tab">References</a>
+            <a href="#4a" data-toggle="tab">References</a>
         </li>
         <li>
-            <a href="#3a" data-toggle="tab">Contacts</a>
+            <a href="#5a" data-toggle="tab">Contacts</a>
         </li>
     </ul>
 
     <div class="tab-content clearfix" style="padding-top: 20px">
-        <div class="tab-pane active" id="1a">
+        <div class="tab-pane" id="1a">
             <div class="row" style="font-weight:700">
-                <div class="col-md-6">Tag</div>
-                <div class="col-md-6">Type</div>
+                <div class="col-md-3">Story</div>
+                <div class="col-md-9">Narrative</div>
+            </div>
+
+            @foreach (var item in Model.ModelObject.StoryEntityList)
+            {
+                <div class="row">
+                    <div class="col-md-3">@Html.DisplayFor(x => item.TitleTxt)</div>
+                    <div class="col-md-9">@Html.DisplayFor(x => item.DescTxt)</div>
+                </div>
+            }
+        </div>
+        <div class="tab-pane" id="2a">
+            <div class="row" style="font-weight:700">
+                <div class="col-md-3">Project</div>
+                <div class="col-md-9">Description</div>
+            </div>
+
+            @foreach (var item in Model.ModelObject.ProjectResourceList)
+            {
+                <div class="row">
+                    <div class="col-md-3">@Html.DisplayFor(x => item.ProjectNm)</div>
+                    <div class="col-md-9">@Html.DisplayFor(x => item.DescTxt)</div>
+                </div>
+            }
+        </div>
+        <div class="tab-pane active" id="3a">
+            <div class="row" style="font-weight:700">
+                <div class="col-md-3">Tag</div>
+                <div class="col-md-3">Type</div>
             </div>
 
             @foreach (var item in Model.ModelObject.EntityTagList)
             {
                 <div class="row">
-                    <div class="col-md-6">@Html.DisplayFor(x => item.TagTxt)</div>
-                    <div class="col-md-2">@Html.DisplayFor(x => item.TypeTxt)</div>
+                    <div class="col-md-3">@Html.DisplayFor(x => item.TagTxt)</div>
+                    <div class="col-md-3">@Html.DisplayFor(x => item.TypeTxt)</div>
                 </div>
             }
         </div>
-        <div class="tab-pane" id="2a">
+        <div class="tab-pane" id="4a">
             <h3>TODO: references tab</h3>
         </div>
-        <div class="tab-pane" id="3a">
+        <div class="tab-pane" id="5a">
             <h3>TODO: contacts tab</h3>
         </div>
     </div>

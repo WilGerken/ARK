@@ -25,7 +25,7 @@ namespace Library.Resources.Project
     {
         public int?   projectID { get; set; }
         public int?   storyID   { get; set; }
-        public int?   typeID    { get; set; }
+        public int?   roleID    { get; set; }
 
         /// <summary>
         /// default constructor
@@ -40,7 +40,7 @@ namespace Library.Resources.Project
     {
         public int? projectID { get; set; }
         public int? storyID   { get; set; }
-        public int? typeID    { get; set; }
+        public int? roleID    { get; set; }
     }
 
     /// <summary>
@@ -52,8 +52,8 @@ namespace Library.Resources.Project
         public string projectNm { get; set; }
         public int    storyID   { get; set; }
         public string titleTxt  { get; set; }
-        public int?   typeID    { get; set; }
-        public string typeTxt   { get; set; }
+        public int?   roleID    { get; set; }
+        public string roleTxt   { get; set; }
         public string descTxt   { get; set; }
 
         /// <summary>

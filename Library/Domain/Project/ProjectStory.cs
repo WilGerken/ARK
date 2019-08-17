@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Library.Common;
 using Library.Resources;
-using Library.Resources.Entity;
+using Library.Resources.Project;
 using Csla;
 
 namespace Library.Domain
@@ -16,15 +16,15 @@ namespace Library.Domain
     /// Item Criteria
     /// </summary>
     [Serializable]
-    public class EntityStory_ItemCriteria : ItemCriteria_Base<EntityStory_ItemCriteria>
+    public class ProjectStory_ItemCriteria : ItemCriteria_Base<ProjectStory_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int?> EntityID_Property = RegisterProperty<int?>(c => c.EntityID);
-        public int? EntityID
+        public static readonly PropertyInfo<int?> ProjectID_Property = RegisterProperty<int?>(c => c.ProjectID);
+        public int? ProjectID
         {
-            get { return ReadProperty(EntityID_Property); }
-            set { LoadProperty(EntityID_Property, value); }
+            get { return ReadProperty(ProjectID_Property); }
+            set { LoadProperty(ProjectID_Property, value); }
         }
 
         public static readonly PropertyInfo<int?> StoryID_Property = RegisterProperty<int?>(c => c.StoryID);
@@ -41,13 +41,13 @@ namespace Library.Domain
             set { LoadProperty(RoleID_Property, value); }
         }
 
-        public K_ENTITY_STORY ToDto()
+        public K_PROJECT_STORY ToDto()
         {
-            K_ENTITY_STORY dto = new K_ENTITY_STORY();
+            K_PROJECT_STORY dto = new K_PROJECT_STORY();
 
-            dto.entityID = EntityID;
-            dto.storyID  = StoryID;
-            dto.roleID   = RoleID;
+            dto.projectID = ProjectID;
+            dto.storyID   = StoryID;
+            dto.roleID    = RoleID;
 
             base.ToDto(dto);
 
@@ -61,15 +61,15 @@ namespace Library.Domain
     /// List Criteria
     /// </summary>
     [Serializable]
-    public class EntityStory_ListCriteria : ListCriteria_Base<EntityStory_ListCriteria>
+    public class ProjectStory_ListCriteria : ListCriteria_Base<ProjectStory_ListCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int?> EntityID_Property = RegisterProperty<int?>(c => c.EntityID);
-        public int? EntityID
+        public static readonly PropertyInfo<int?> ProjectID_Property = RegisterProperty<int?>(c => c.ProjectID);
+        public int? ProjectID
         {
-            get { return ReadProperty(EntityID_Property); }
-            set { LoadProperty(EntityID_Property, value); }
+            get { return ReadProperty(ProjectID_Property); }
+            set { LoadProperty(ProjectID_Property, value); }
         }
 
         public static readonly PropertyInfo<int?> StoryID_Property = RegisterProperty<int?>(c => c.StoryID);
@@ -86,13 +86,13 @@ namespace Library.Domain
             set { LoadProperty(RoleID_Property, value); }
         }
 
-        public F_ENTITY_STORY ToDto()
+        public F_PROJECT_STORY ToDto()
         {
-            F_ENTITY_STORY dto = new F_ENTITY_STORY();
+            F_PROJECT_STORY dto = new F_PROJECT_STORY();
 
-            dto.entityID = EntityID;
+            dto.projectID = ProjectID;
             dto.storyID  = StoryID;
-            dto.roleID   = RoleID;
+            dto.roleID    = RoleID;
 
             base.ToDto (dto);
 
@@ -106,22 +106,22 @@ namespace Library.Domain
     /// ReadOnly Item
     /// </summary>
     [Serializable]
-    public class EntityStory_InfoItem : InfoItem_Base<EntityStory_InfoItem, EntityStory_ItemCriteria>
+    public class ProjectStory_InfoItem : InfoItem_Base<ProjectStory_InfoItem, ProjectStory_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int> EntityID_Property = RegisterProperty<int>(c => c.EntityID);
-        public int EntityID
+        public static readonly PropertyInfo<int> ProjectID_Property = RegisterProperty<int>(c => c.ProjectID);
+        public int ProjectID
         {
-            get { return ReadProperty(EntityID_Property); }
-            private set { LoadProperty(EntityID_Property, value); }
+            get { return ReadProperty(ProjectID_Property); }
+            private set { LoadProperty(ProjectID_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> EntityNm_Property = RegisterProperty<string>(c => c.EntityNm);
-        public string EntityNm
+        public static readonly PropertyInfo<string> ProjectNm_Property = RegisterProperty<string>(c => c.ProjectNm);
+        public string ProjectNm
         {
-            get { return ReadProperty(EntityNm_Property); }
-            private set { LoadProperty(EntityNm_Property, value); }
+            get { return ReadProperty(ProjectNm_Property); }
+            private set { LoadProperty(ProjectNm_Property, value); }
         }
 
         public static readonly PropertyInfo<int> StoryID_Property = RegisterProperty<int>(c => c.StoryID);
@@ -159,15 +159,15 @@ namespace Library.Domain
             private set { LoadProperty(DescTxt_Property, value); }
         }
 
-        public void FromDto (D_ENTITY_STORY dto)
+        public void FromDto (D_PROJECT_STORY dto)
         {
-            EntityID = dto.entityID;
-            EntityNm = dto.entityNm;
-            StoryID  = dto.storyID;
-            TitleTxt = dto.titleTxt;
-            RoleID   = dto.roleID;
-            RoleTxt  = dto.roleTxt;
-            DescTxt  = dto.descTxt;
+            ProjectID = dto.projectID;
+            ProjectNm = dto.projectNm;
+            StoryID   = dto.storyID;
+            TitleTxt  = dto.titleTxt;
+            RoleID    = dto.roleID;
+            RoleTxt   = dto.roleTxt;
+            DescTxt   = dto.descTxt;
 
             base.FromDto (dto);
         }
@@ -176,7 +176,7 @@ namespace Library.Domain
 
         #region DataPortal
 
-        private void Child_Fetch (D_ENTITY_STORY dto) { FromDto(dto); }
+        private void Child_Fetch (D_PROJECT_STORY dto) { FromDto(dto); }
 
         #endregion
     }
@@ -185,11 +185,11 @@ namespace Library.Domain
     /// ReadOnly List
     /// </summary>
     [Serializable]
-    public class EntityStory_InfoList : InfoList_Base<EntityStory_InfoList, EntityStory_ListCriteria, EntityStory_InfoItem, EntityStory_ItemCriteria>
+    public class ProjectStory_InfoList : InfoList_Base<ProjectStory_InfoList, ProjectStory_ListCriteria, ProjectStory_InfoItem, ProjectStory_ItemCriteria>
     {
         #region DataPortal
 
-        private void DataPortal_Fetch (EntityStory_ListCriteria aCriteria)
+        private void DataPortal_Fetch (ProjectStory_ListCriteria aCriteria)
         {
             IsReadOnly = false;
             var rlce = RaiseListChangedEvents;
@@ -198,7 +198,7 @@ namespace Library.Domain
             // add select option if given
             if (aCriteria.SelectOption_Value.HasValue)
             {
-                Insert(0, DataPortal.FetchChild<EntityStory_InfoItem>(new D_ENTITY_STORY
+                Insert(0, DataPortal.FetchChild<ProjectStory_InfoItem>(new D_PROJECT_STORY
                 {
                     selectTxt = aCriteria.SelectOption_Text,
                     objectID  = aCriteria.SelectOption_Value.Value
@@ -206,13 +206,13 @@ namespace Library.Domain
             }
 
             // add elements of list from persistent store
-            using (var ctx = DalFactory.GetManager (DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var ctx = DalFactory.GetManager (DalFactory.ARK_PROJECT_SCHEMA_NM))
             {
-                var dal = ctx.GetProvider<I_ENTITY_STORY>();
+                var dal = ctx.GetProvider<I_PROJECT_STORY>();
                 var list = dal.SelectList(aCriteria.ToDto());
 
                 foreach (var item in list)
-                    Add(DataPortal.FetchChild<EntityStory_InfoItem>(item));
+                    Add(DataPortal.FetchChild<ProjectStory_InfoItem>(item));
             }
 
             RaiseListChangedEvents = rlce;
@@ -223,23 +223,23 @@ namespace Library.Domain
     }
 
     [Serializable]
-    public class EntityStory_EditItem : EditItem_Base<EntityStory_EditItem, EntityStory_ItemCriteria>
+    public class ProjectStory_EditItem : EditItem_Base<ProjectStory_EditItem, ProjectStory_ItemCriteria>
     {
         #region Properties
 
-        public static readonly PropertyInfo<int> EntityID_Property = RegisterProperty<int>(c => c.EntityID);
+        public static readonly PropertyInfo<int> ProjectID_Property = RegisterProperty<int>(c => c.ProjectID);
         [Required]
-        public int EntityID
+        public int ProjectID
         {
-            get { return GetProperty(EntityID_Property); }
-            set { SetProperty(EntityID_Property, value); }
+            get { return GetProperty(ProjectID_Property); }
+            set { SetProperty(ProjectID_Property, value); }
         }
 
-        public static readonly PropertyInfo<string> EntityNm_Property = RegisterProperty<string>(c => c.EntityNm);
-        public string EntityNm
+        public static readonly PropertyInfo<string> ProjectNm_Property = RegisterProperty<string>(c => c.ProjectNm);
+        public string ProjectNm
         {
-            get { return GetProperty(EntityNm_Property); }
-            set { SetProperty(EntityNm_Property, value); }
+            get { return GetProperty(ProjectNm_Property); }
+            set { SetProperty(ProjectNm_Property, value); }
         }
 
         public static readonly PropertyInfo<int> StoryID_Property = RegisterProperty<int>(c => c.StoryID);
@@ -279,31 +279,31 @@ namespace Library.Domain
             set { SetProperty(DescTxt_Property, value); }
         }
 
-        public void FromDto (D_ENTITY_STORY dto)
+        public void FromDto (D_PROJECT_STORY dto)
         {
             using (BypassPropertyChecks)
             {
-                EntityID = dto.entityID;
+                ProjectID = dto.projectID;
                 StoryID  = dto.storyID;
-                RoleID   = dto.roleID;
-                DescTxt  = dto.descTxt;
+                RoleID    = dto.roleID;
+                DescTxt   = dto.descTxt;
 
-                EntityNm = dto.entityNm;
-                TitleTxt = dto.titleTxt;
-                RoleTxt  = dto.roleTxt;
+                ProjectNm = dto.projectNm;
+                TitleTxt  = dto.titleTxt;
+                RoleTxt   = dto.roleTxt;
 
                 base.FromDto (dto);
             }
         }
 
-        public D_ENTITY_STORY ToDto()
+        public D_PROJECT_STORY ToDto()
         {
-            D_ENTITY_STORY dto = new D_ENTITY_STORY();
+            D_PROJECT_STORY dto = new D_PROJECT_STORY();
 
-            dto.entityID = EntityID;
-            dto.storyID  = StoryID;
-            dto.roleID   = RoleID;
-            dto.descTxt  = DescTxt;
+            dto.projectID = ProjectID;
+            dto.storyID   = StoryID;
+            dto.roleID    = RoleID;
+            dto.descTxt   = DescTxt;
 
             base.ToDto (dto);
 
@@ -320,25 +320,25 @@ namespace Library.Domain
             base.DataPortal_Create();
         }
 
-        private void DataPortal_Fetch(EntityStory_ItemCriteria aKey)
+        private void DataPortal_Fetch(ProjectStory_ItemCriteria aKey)
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_PROJECT_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ENTITY_STORY>();
+                var dal = dalManager.GetProvider<I_PROJECT_STORY>();
                 var data = dal.SelectItem(aKey.ToDto());
 
                 FromDto(data);
             }
         }
 
-        private void Child_Fetch(D_ENTITY_STORY dto) { FromDto(dto); }
+        private void Child_Fetch(D_PROJECT_STORY dto) { FromDto(dto); }
 
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_Insert()
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_PROJECT_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ENTITY_STORY>();
+                var dal = dalManager.GetProvider<I_PROJECT_STORY>();
                 var data = dal.InsertItem(ToDto());
 
                 FromDto(data);
@@ -348,12 +348,12 @@ namespace Library.Domain
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_Update()
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_PROJECT_SCHEMA_NM))
             {
                 UpdateOnDts = DateTime.Now;
                 UpdateByUid = AppInfo.UserID;
 
-                var dal = dalManager.GetProvider<I_ENTITY_STORY>();
+                var dal = dalManager.GetProvider<I_PROJECT_STORY>();
                 var data = dal.UpdateItem(ToDto());
 
                 FromDto(data);
@@ -363,11 +363,11 @@ namespace Library.Domain
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_DeleteSelf()
         {
-            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var dalManager = DalFactory.GetManager(DalFactory.ARK_PROJECT_SCHEMA_NM))
             {
-                var dal = dalManager.GetProvider<I_ENTITY_STORY>();
+                var dal = dalManager.GetProvider<I_PROJECT_STORY>();
 
-                dal.DeleteItem (new K_ENTITY_STORY { objectID = this.ObjectID });
+                dal.DeleteItem (new K_PROJECT_STORY { objectID = this.ObjectID });
             }
         }
 
@@ -394,16 +394,16 @@ namespace Library.Domain
     /// Unit of Work Getter
     /// </summary>
     [Serializable]
-    public class EntityStory_EditItem_Getter : EditItem_Getter_Base<EntityStory_EditItem, EntityStory_ItemCriteria>
+    public class ProjectStory_EditItem_Getter : EditItem_Getter_Base<ProjectStory_EditItem, ProjectStory_ItemCriteria>
     {
         #region DataPortal
 
-        protected override void DataPortal_Fetch(EntityStory_ItemCriteria aCriteria)
+        protected override void DataPortal_Fetch(ProjectStory_ItemCriteria aCriteria)
         {
             if (aCriteria.HasKey)
-                EditItem = EntityStory_EditItem.GetItem(aCriteria);
+                EditItem = ProjectStory_EditItem.GetItem(aCriteria);
             else
-                EditItem = EntityStory_EditItem.NewItem(aCriteria);
+                EditItem = ProjectStory_EditItem.NewItem(aCriteria);
         }
 
         #endregion
@@ -413,22 +413,22 @@ namespace Library.Domain
     /// Editable List
     /// </summary>
     [Serializable]
-    public class EntityStory_EditList : EditList_Base<EntityStory_EditList, EntityStory_ListCriteria, EntityStory_EditItem, EntityStory_ItemCriteria>
+    public class ProjectStory_EditList : EditList_Base<ProjectStory_EditList, ProjectStory_ListCriteria, ProjectStory_EditItem, ProjectStory_ItemCriteria>
     {
         #region DataPortal
 
-        private void DataPortal_Fetch(EntityStory_ListCriteria aCriteria)
+        private void DataPortal_Fetch(ProjectStory_ListCriteria aCriteria)
         {
             var rlce = RaiseListChangedEvents;
             RaiseListChangedEvents = false;
 
-            using (var ctx = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var ctx = DalFactory.GetManager(DalFactory.ARK_PROJECT_SCHEMA_NM))
             {
-                var dal = ctx.GetProvider<I_ENTITY_STORY>();
+                var dal = ctx.GetProvider<I_PROJECT_STORY>();
                 var list = dal.SelectList(aCriteria.ToDto());
 
                 foreach (var item in list)
-                    Add(DataPortal.FetchChild<EntityStory_EditItem>(item));
+                    Add(DataPortal.FetchChild<ProjectStory_EditItem>(item));
             }
 
             RaiseListChangedEvents = rlce;
@@ -437,7 +437,7 @@ namespace Library.Domain
         [Transactional(TransactionalTypes.TransactionScope)]
         protected override void DataPortal_Update()
         {
-            using (var ctx = DalFactory.GetManager(DalFactory.ARK_ENTITY_SCHEMA_NM))
+            using (var ctx = DalFactory.GetManager(DalFactory.ARK_PROJECT_SCHEMA_NM))
             {
                 Child_Update();
             }
